@@ -19,12 +19,23 @@ repositories {
 }
 
 dependencies {
+    compile 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter'
+
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-    testImplementation('org.springframework.boot:spring-boot-starter-test') {
-        exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
-    }
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    compile 'org.springframework.boot:spring-boot-starter-actuator'
+
+    compile 'mysql:mysql-connector-java'
+
+    compile 'org.springframework.boot:spring-boot-starter-mail:2.2.2.RELEASE'
+
+    compile 'com.google.code.gson:gson:2.8.2'
 }
 
 test {
