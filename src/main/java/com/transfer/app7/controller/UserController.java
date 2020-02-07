@@ -21,7 +21,7 @@ public class UserController {
 
     @PostMapping(consumes = "application/json")
     public void createUser(@RequestBody UserDto userDto) {
-        userService.save(userMapper.mapToUser(userDto));
+        userService.save(userMapper.mapToUserAdd(userDto));
     }
 
     @GetMapping

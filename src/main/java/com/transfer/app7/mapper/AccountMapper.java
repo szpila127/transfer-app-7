@@ -16,10 +16,8 @@ public class AccountMapper {
 
     public Account mapToAccount(final AccountDto accountDto) {
         return new Account(
-                accountDto.getId(),
                 accountDto.getBalance(),
-                accountDto.getCurrency(),
-                userMapper.mapToUser(accountDto.getUser()));
+                accountDto.getCurrency());
     }
 
     public AccountDto mapToAccountDto(final Account account) {

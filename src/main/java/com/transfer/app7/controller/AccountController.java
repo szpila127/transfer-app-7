@@ -1,10 +1,12 @@
 package com.transfer.app7.controller;
 
+import com.transfer.app7.domain.AccountDto;
+import com.transfer.app7.mapper.AccountMapper;
 import com.transfer.app7.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin("*")
@@ -13,4 +15,22 @@ public class AccountController {
 
     @Autowired
     private AccountService accountService;
+
+    @Autowired
+    private AccountMapper accountMapper;
+
+    @PostMapping(consumes = "application/json")
+    public void createAccount(@RequestBody AccountDto accountDto) {
+        accountService.save(accountMapper.mapToAccount(accountDto));
+    }
+
+    @GetMapping
+    public List<AccountDto> getAccounts() {
+        return accountMapper.mapToAccountDtoList(accountService.getAllAccounts());
+    }
+
+    @GetMapping(value = "/{id}")
+    public AccountDto getAccount(@PathVariable("id") Long accountId) throws NotFoundException {
+        return accountMapper.mapToAccountDto(accountService.getAccount(accountId).orElseThrow(NotFoundException::new));
+    }
 }

@@ -18,6 +18,10 @@ public class AccountService {
         return accountRepository.findAll();
     }
 
+    public Account save(Account account) {
+        return accountRepository.save(account);
+    }
+
     public Optional<Account> getAccount(final Long id) {
         return accountRepository.findById(id);
     }

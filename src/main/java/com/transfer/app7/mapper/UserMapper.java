@@ -16,10 +16,20 @@ public class UserMapper {
 
     public User mapToUser(final UserDto userDto) {
         return new User(
+                userDto.getId(),
+                userDto.getLogin(),
+                userDto.getPassword(),
+                userDto.getPesel(),
+                accountMapper.mapToAccountList(userDto.getAccounts()));
+    }
+
+    public User mapToUserAdd(final UserDto userDto) {
+        return new User(
                 userDto.getLogin(),
                 userDto.getPassword(),
                 userDto.getPesel());
     }
+
 
     public UserDto maToUserDto(final User user) {
         return new UserDto(
