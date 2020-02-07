@@ -2,6 +2,7 @@ package com.transfer.app7.mapper;
 
 import com.transfer.app7.domain.Account;
 import com.transfer.app7.domain.AccountDto;
+import com.transfer.app7.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,12 +13,14 @@ import java.util.stream.Collectors;
 public class AccountMapper {
 
     @Autowired
-    private UserMapper userMapper;
+    private UserRepository userRepository;
 
     public Account mapToAccount(final AccountDto accountDto) {
         return new Account(
+                accountDto.getId(),
                 accountDto.getBalance(),
-                accountDto.getCurrency());
+                accountDto.getCurrency(),
+                userRepository.findById(accountDto.getUserId()).orElseThrow(null));
     }
 
     public AccountDto mapToAccountDto(final Account account) {
@@ -25,7 +28,7 @@ public class AccountMapper {
                 account.getId(),
                 account.getBalance(),
                 account.getCurrency(),
-                userMapper.maToUserDto(account.getUser()));
+                account.getUser().getId());
     }
 
     public List<AccountDto> mapToAccountDtoList(final List<Account> accountList) {
@@ -34,7 +37,7 @@ public class AccountMapper {
                         account.getId(),
                         account.getBalance(),
                         account.getCurrency(),
-                        userMapper.maToUserDto(account.getUser())))
+                        account.getUser().getId()))
                 .collect(Collectors.toList());
     }
 
@@ -44,7 +47,7 @@ public class AccountMapper {
                         accountDto.getId(),
                         accountDto.getBalance(),
                         accountDto.getCurrency(),
-                        userMapper.mapToUser(accountDto.getUser())))
+                        userRepository.findById(accountDto.getUserId()).orElseThrow(null)))
                 .collect(Collectors.toList());
     }
 }

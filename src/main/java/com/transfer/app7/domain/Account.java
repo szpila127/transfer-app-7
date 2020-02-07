@@ -26,10 +26,11 @@ public class Account {
 
     @ManyToOne
     @JoinColumn(name = "USER_ID")
-    private User user;
+    public User user;
 
-    public Account(BigDecimal balance, Currency currency) {
+    public Account(BigDecimal balance, Currency currency, User user) {
         this.balance = balance;
         this.currency = currency;
+        this.user = user;
     }
 }

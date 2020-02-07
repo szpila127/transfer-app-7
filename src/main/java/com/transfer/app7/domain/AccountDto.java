@@ -19,6 +19,6 @@ public class AccountDto {
     @Enumerated(EnumType.STRING)
     private Currency currency;
 
-    private UserDto user;
+    private Long userId;
 
 }

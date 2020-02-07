@@ -30,7 +30,6 @@ public class UserMapper {
                 userDto.getPesel());
     }
 
-
     public UserDto maToUserDto(final User user) {
         return new UserDto(
                 user.getId(),
