@@ -28,5 +28,12 @@ public class User {
             mappedBy = "user",
             cascade = CascadeType.ALL
     )
-    private List<Account> accounts = new ArrayList<>();
+    private List<Account> accounts;
+
+    public User(String login, String password, Long pesel) {
+        this.login = login;
+        this.password = password;
+        this.pesel = pesel;
+        this.accounts = new ArrayList<>();
+    }
 }
