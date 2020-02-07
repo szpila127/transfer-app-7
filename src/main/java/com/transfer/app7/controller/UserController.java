@@ -43,9 +43,4 @@ public class UserController {
     public UserDto updateAllUser(@RequestBody UserDto userDto) {
         return userMapper.maToUserDto(userService.save(userMapper.mapToUser(userDto)));
     }
-
-    @PatchMapping(consumes = "application/json")
-    public UserDto updateUserField(@RequestBody UserDto userDto) {
-        return userMapper.maToUserDto(userService.save(userMapper.mapToUser(userDto)));
-    }
 }
