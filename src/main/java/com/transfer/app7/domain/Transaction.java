@@ -6,27 +6,28 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
-public class User {
+public class Transaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String login;
-    private String password;
-    private Long pesel;
+    private LocalDate date;
+    private BigDecimal amount;
 
-    @OneToMany(
-            mappedBy = "user",
-            cascade = CascadeType.ALL
-    )
-    private List<Account> accounts = new ArrayList<>();
+    @OneToOne
+    @JoinColumn(name = "ACCOUNT_OUT_ID")
+    private Account accountOut;
+
+    @OneToOne
+    @JoinColumn(name = "ACCOUNT_IN_ID")
+    private Account accountIn;
 }
