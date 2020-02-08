@@ -17,7 +17,7 @@ public class UserMapper {
     public User mapToUser(final UserDto userDto) {
         return new User(
                 userDto.getId(),
-                userDto.getLogin(),
+                userDto.getEmail(),
                 userDto.getPassword(),
                 userDto.getPesel(),
                 accountMapper.mapToAccountList(userDto.getAccounts()));
@@ -26,7 +26,7 @@ public class UserMapper {
     public UserDto mapToUserDto(final User user) {
         return new UserDto(
                 user.getId(),
-                user.getLogin(),
+                user.getEmail(),
                 user.getPassword(),
                 user.getPesel(),
                 accountMapper.mapToAccountDtoList(user.getAccounts()));
@@ -36,7 +36,7 @@ public class UserMapper {
         return userList.stream()
                 .map(user -> new UserDto(
                         user.getId(),
-                        user.getLogin(),
+                        user.getEmail(),
                         user.getPassword(),
                         user.getPesel(),
                         accountMapper.mapToAccountDtoList(user.getAccounts())))
@@ -47,7 +47,7 @@ public class UserMapper {
         return userDtoList.stream()
                 .map(userDto -> new User(
                         userDto.getId(),
-                        userDto.getLogin(),
+                        userDto.getEmail(),
                         userDto.getPassword(),
                         userDto.getPesel(),
                         accountMapper.mapToAccountList(userDto.getAccounts())))
