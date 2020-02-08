@@ -15,6 +15,6 @@ public class TransactionDto {
     private Long id;
     private LocalDate date;
     private BigDecimal amount;
-    private AccountDto accountOut;
-    private AccountDto accountIn;
+    private Long accountOutId;
+    private Long accountInId;
 }

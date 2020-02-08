@@ -31,16 +31,6 @@ public class AccountMapper {
                 account.getUser().getId());
     }
 
-    public List<AccountDto> mapToAccountDtoList(final List<Account> accountList) {
-        return accountList.stream()
-                .map(account -> new AccountDto(
-                        account.getId(),
-                        account.getBalance(),
-                        account.getCurrency(),
-                        account.getUser().getId()))
-                .collect(Collectors.toList());
-    }
-
     public List<Account> mapToAccountList(final List<AccountDto> accountDtoList) {
         return accountDtoList.stream()
                 .map(accountDto -> new Account(
@@ -48,6 +38,16 @@ public class AccountMapper {
                         accountDto.getBalance(),
                         accountDto.getCurrency(),
                         userRepository.findById(accountDto.getUserId()).orElseThrow(null)))
+                .collect(Collectors.toList());
+    }
+
+    public List<AccountDto> mapToAccountDtoList(final List<Account> accountList) {
+        return accountList.stream()
+                .map(account -> new AccountDto(
+                        account.getId(),
+                        account.getBalance(),
+                        account.getCurrency(),
+                        account.getUser().getId()))
                 .collect(Collectors.toList());
     }
 }

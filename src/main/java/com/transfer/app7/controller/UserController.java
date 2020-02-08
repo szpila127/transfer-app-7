@@ -21,7 +21,7 @@ public class UserController {
 
     @PostMapping(consumes = "application/json")
     public void createUser(@RequestBody UserDto userDto) {
-        userService.save(userMapper.mapToUserAdd(userDto));
+        userService.save(userMapper.mapToUser(userDto));
     }
 
     @GetMapping
@@ -31,7 +31,7 @@ public class UserController {
 
     @GetMapping(value = "/{id}")
     public UserDto getUser(@PathVariable("id") Long userId) throws NotFoundException{
-        return userMapper.maToUserDto(userService.getUser(userId).orElseThrow(NotFoundException::new));
+        return userMapper.mapToUserDto(userService.getUser(userId).orElseThrow(NotFoundException::new));
     }
 
     @DeleteMapping(value = "/{id}")
@@ -41,6 +41,6 @@ public class UserController {
 
     @PutMapping(consumes = "application/json")
     public UserDto updateAllUser(@RequestBody UserDto userDto) {
-        return userMapper.maToUserDto(userService.save(userMapper.mapToUser(userDto)));
+        return userMapper.mapToUserDto(userService.save(userMapper.mapToUser(userDto)));
     }
 }

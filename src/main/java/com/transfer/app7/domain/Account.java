@@ -27,10 +27,4 @@ public class Account {
     @ManyToOne
     @JoinColumn(name = "USER_ID")
     public User user;
-
-    public Account(BigDecimal balance, Currency currency, User user) {
-        this.balance = balance;
-        this.currency = currency;
-        this.user = user;
-    }
 }

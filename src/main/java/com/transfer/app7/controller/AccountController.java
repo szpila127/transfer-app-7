@@ -33,4 +33,14 @@ public class AccountController {
     public AccountDto getAccount(@PathVariable("id") Long accountId) throws NotFoundException {
         return accountMapper.mapToAccountDto(accountService.getAccount(accountId).orElseThrow(NotFoundException::new));
     }
+
+    @DeleteMapping(value = "/{id}")
+    public void deleteAccount(@PathVariable("id") Long accountId) {
+        accountService.deleteAccount(accountId);
+    }
+
+    @PutMapping(consumes = "application/json")
+    public AccountDto updateAccount(@RequestBody AccountDto accountDto) {
+        return accountMapper.mapToAccountDto(accountService.save(accountMapper.mapToAccount(accountDto)));
+    }
 }

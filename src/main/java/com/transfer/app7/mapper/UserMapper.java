@@ -23,14 +23,7 @@ public class UserMapper {
                 accountMapper.mapToAccountList(userDto.getAccounts()));
     }
 
-    public User mapToUserAdd(final UserDto userDto) {
-        return new User(
-                userDto.getLogin(),
-                userDto.getPassword(),
-                userDto.getPesel());
-    }
-
-    public UserDto maToUserDto(final User user) {
+    public UserDto mapToUserDto(final User user) {
         return new UserDto(
                 user.getId(),
                 user.getLogin(),

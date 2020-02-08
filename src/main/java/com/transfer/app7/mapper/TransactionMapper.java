@@ -2,6 +2,7 @@ package com.transfer.app7.mapper;
 
 import com.transfer.app7.domain.Transaction;
 import com.transfer.app7.domain.TransactionDto;
+import com.transfer.app7.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -9,15 +10,15 @@ import org.springframework.stereotype.Component;
 public class TransactionMapper {
 
     @Autowired
-    private AccountMapper accountMapper;
+    private AccountRepository accountRepository;
 
     public Transaction mapToTransaction(final TransactionDto transactionDto) {
         return new Transaction(
                 transactionDto.getId(),
                 transactionDto.getDate(),
                 transactionDto.getAmount(),
-                accountMapper.mapToAccount(transactionDto.getAccountOut()),
-                accountMapper.mapToAccount(transactionDto.getAccountIn()));
+                accountRepository.findById(transactionDto.getAccountOutId()).orElseThrow(null),
+                accountRepository.findById(transactionDto.getAccountInId()).orElseThrow(null));
     }
 
     public TransactionDto mapToTransactionDto(final Transaction transaction) {
@@ -25,7 +26,7 @@ public class TransactionMapper {
                 transaction.getId(),
                 transaction.getDate(),
                 transaction.getAmount(),
-                accountMapper.mapToAccountDto(transaction.getAccountOut()),
-                accountMapper.mapToAccountDto(transaction.getAccountIn()));
+                transaction.getAccountOut().getId(),
+                transaction.getAccountIn().getId());
     }
 }
