@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class TransactionDto {
 
     private Long id;
-    private LocalDateTime date;
+    private LocalDateTime date = LocalDateTime.now();
     private BigDecimal amount;
     private Long accountOutId;
     private Long accountInId;
