@@ -25,6 +25,11 @@ public class UserController {
         return userFacade.getUsers();
     }
 
+    @GetMapping(value = "/count")
+    public Long countUsers() {
+        return userFacade.countUsers();
+    }
+
     @GetMapping(value = "/{id}")
     public UserDto getUser(@PathVariable("id") Long userId) throws NotFoundException{
         return userFacade.getUser(userId);

@@ -26,6 +26,10 @@ public class UserFacade {
         return userMapper.mapToUserDtoList(userService.getAllUsers());
     }
 
+    public Long countUsers() {
+        return userService.countUsers();
+    }
+
     public UserDto getUser(Long userId) throws NotFoundException {
         return userMapper.mapToUserDto(userService.getUser(userId).orElseThrow(NotFoundException::new));
     }

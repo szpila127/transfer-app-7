@@ -29,6 +29,11 @@ public class AccountController {
         return accountMapper.mapToAccountDtoList(accountService.getAllAccounts());
     }
 
+    @GetMapping(value = "/count")
+    public Long countAccounts() {
+        return accountService.countAccounts();
+    }
+
     @GetMapping(value = "/{id}")
     public AccountDto getAccount(@PathVariable("id") Long accountId) throws NotFoundException {
         return accountMapper.mapToAccountDto(accountService.getAccount(accountId).orElseThrow(NotFoundException::new));
