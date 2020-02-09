@@ -25,33 +25,31 @@ public class TransactionController {
 
     @PostMapping(consumes = "application/json")
     public void createTransaction(@RequestBody TransactionDto transactionDto) {
-        transactionService.save(transactionMapper.mapToTransaction(transactionDto));
+        transactionFacade.createTransaction(transactionDto);
     }
 
     @GetMapping
     public List<TransactionDto> getTransactions() {
-        return transactionMapper.mapToTransactionDtoList(transactionService.getAllTransactions());
+        return transactionFacade.getTransactions();
     }
 
     @GetMapping(value = "/count")
     public Long countTransactions() {
-        return transactionService.countTransactions();
+        return transactionFacade.countTransactions();
     }
 
     @GetMapping(value = "/{id}")
     public TransactionDto getTransaction(@PathVariable("id") Long transactionId) throws NotFoundException {
-        return transactionMapper.mapToTransactionDto(transactionService.getTransaction(transactionId).orElseThrow(NotFoundException::new));
+        return transactionFacade.getTransaction(transactionId);
     }
 
     @DeleteMapping(value = "/{id}")
     public void deleteTransaction(@PathVariable("id") Long transactionId) {
-        transactionService.deleteTransaction(transactionId);
+        transactionFacade.deleteTransaction(transactionId);
     }
 
     @PutMapping(consumes = "application/json")
     public TransactionDto updateTransaction(@RequestBody TransactionDto transactionDto) {
-        return transactionMapper.mapToTransactionDto(transactionService.save(transactionMapper.mapToTransaction(transactionDto)));
+        return transactionFacade.updateTransaction(transactionDto);
     }
-
-
 }
