@@ -6,6 +6,9 @@ import com.transfer.app7.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Component
 public class TransactionMapper {
 
@@ -28,5 +31,16 @@ public class TransactionMapper {
                 transaction.getAmount(),
                 transaction.getAccountOut().getId(),
                 transaction.getAccountIn().getId());
+    }
+
+    public List<TransactionDto> mapToTransactionDtoList(final List<Transaction> transactionList) {
+        return transactionList.stream()
+                .map(transaction -> new TransactionDto(
+                        transaction.getId(),
+                        transaction.getDate(),
+                        transaction.getAmount(),
+                        transaction.getAccountOut().getId(),
+                        transaction.getAccountIn().getId()))
+                .collect(Collectors.toList());
     }
 }

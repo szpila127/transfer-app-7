@@ -1,8 +1,7 @@
 package com.transfer.app7.controller;
 
 import com.transfer.app7.domain.AccountDto;
-import com.transfer.app7.mapper.AccountMapper;
-import com.transfer.app7.service.AccountService;
+import com.transfer.app7.facade.AccountFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,38 +13,35 @@ import java.util.List;
 public class AccountController {
 
     @Autowired
-    private AccountService accountService;
-
-    @Autowired
-    private AccountMapper accountMapper;
+    private AccountFacade accountFacade;
 
     @PostMapping(consumes = "application/json")
     public void createAccount(@RequestBody AccountDto accountDto) {
-        accountService.save(accountMapper.mapToAccount(accountDto));
+        accountFacade.createAccount(accountDto);
     }
 
     @GetMapping
     public List<AccountDto> getAccounts() {
-        return accountMapper.mapToAccountDtoList(accountService.getAllAccounts());
+        return accountFacade.getAccounts();
     }
 
     @GetMapping(value = "/count")
     public Long countAccounts() {
-        return accountService.countAccounts();
+        return accountFacade.countAccounts();
     }
 
     @GetMapping(value = "/{id}")
     public AccountDto getAccount(@PathVariable("id") Long accountId) throws NotFoundException {
-        return accountMapper.mapToAccountDto(accountService.getAccount(accountId).orElseThrow(NotFoundException::new));
+        return accountFacade.getAccount(accountId);
     }
 
     @DeleteMapping(value = "/{id}")
     public void deleteAccount(@PathVariable("id") Long accountId) {
-        accountService.deleteAccount(accountId);
+        accountFacade.deleteAccount(accountId);
     }
 
     @PutMapping(consumes = "application/json")
     public AccountDto updateAccount(@RequestBody AccountDto accountDto) {
-        return accountMapper.mapToAccountDto(accountService.save(accountMapper.mapToAccount(accountDto)));
+        return accountFacade.updateAccount(accountDto);
     }
 }
