@@ -1,7 +1,7 @@
 package com.transfer.app7.client;
 
 import com.transfer.app7.config.NbpApiConfig;
-import com.transfer.app7.domain.NbpAPI.ResponseDto;
+import com.transfer.app7.domain.nbpAPI.ResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
