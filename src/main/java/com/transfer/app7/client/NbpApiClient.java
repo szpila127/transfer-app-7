@@ -2,8 +2,6 @@ package com.transfer.app7.client;
 
 import com.transfer.app7.config.NbpApiConfig;
 import com.transfer.app7.domain.NbpAPI.ResponseDto;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
@@ -13,7 +11,6 @@ import java.net.URI;
 
 @Component
 public class NbpApiClient {
-    private static final Logger LOGGER = LoggerFactory.getLogger(NbpApiClient.class);
 
     @Autowired
     private NbpApiConfig nbpApiConfig;
