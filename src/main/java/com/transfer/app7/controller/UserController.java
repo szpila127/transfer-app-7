@@ -1,6 +1,7 @@
 package com.transfer.app7.controller;
 
 import com.transfer.app7.domain.UserDto;
+import com.transfer.app7.exception.NotFoundException;
 import com.transfer.app7.facade.UserFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +32,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/{id}")
-    public UserDto getUser(@PathVariable("id") Long userId) throws NotFoundException{
+    public UserDto getUser(@PathVariable("id") Long userId) throws NotFoundException {
         return userFacade.getUser(userId);
     }
 

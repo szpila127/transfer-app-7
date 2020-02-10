@@ -18,14 +18,17 @@ public class NbpApiClient {
     @Autowired
     private RestTemplate restTemplate;
 
-    public ResponseDto getCurrencyFactor(String currencyCode) {
-        URI url = UriComponentsBuilder.fromHttpUrl(nbpApiConfig.getNbpApiEndpoint() + currencyCode)
-                .build()
-                .encode()
-                .toUri();
-        ResponseDto response = restTemplate.getForObject(url, ResponseDto.class);
-        if (response != null) {
-            return response;
-        } else return new ResponseDto();
+    public double getCurrencyFactor(String code) {
+        code = code.toLowerCase();
+        if (code.equals("pln")) {
+            return 1;
+        } else {
+            URI url = UriComponentsBuilder.fromHttpUrl(nbpApiConfig.getNbpApiEndpoint() + code)
+                    .build()
+                    .encode()
+                    .toUri();
+            ResponseDto response = restTemplate.getForObject(url, ResponseDto.class);
+            return response.getRates()[0].getMid();
+        }
     }
 }

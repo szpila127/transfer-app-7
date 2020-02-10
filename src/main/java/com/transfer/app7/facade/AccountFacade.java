@@ -1,6 +1,6 @@
 package com.transfer.app7.facade;
 
-import com.transfer.app7.controller.NotFoundException;
+import com.transfer.app7.exception.NotFoundException;
 import com.transfer.app7.domain.AccountDto;
 import com.transfer.app7.mapper.AccountMapper;
 import com.transfer.app7.service.AccountService;

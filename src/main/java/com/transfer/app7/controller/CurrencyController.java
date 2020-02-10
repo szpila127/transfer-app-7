@@ -1,7 +1,6 @@
 package com.transfer.app7.controller;
 
 import com.transfer.app7.client.NbpApiClient;
-import com.transfer.app7.domain.nbpAPI.ResponseDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,12 +16,7 @@ public class CurrencyController {
 
     @GetMapping(value = "/{code}")
     public double getFactor(@PathVariable String code) {
-        code = code.toLowerCase();
-        if (code.equals("pln")) {
-            return 1;
-        } else {
-            ResponseDto responseDto = nbpApiClient.getCurrencyFactor(code);
-            return responseDto.getRates()[0].getMid();
-        }
+        return nbpApiClient.getCurrencyFactor(code);
     }
 }
+

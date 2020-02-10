@@ -1,6 +1,6 @@
 package com.transfer.app7.facade;
 
-import com.transfer.app7.controller.NotFoundException;
+import com.transfer.app7.exception.NotFoundException;
 import com.transfer.app7.domain.UserDto;
 import com.transfer.app7.mapper.UserMapper;
 import com.transfer.app7.service.UserService;
