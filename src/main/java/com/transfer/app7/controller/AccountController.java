@@ -17,7 +17,7 @@ public class AccountController {
     private AccountFacade accountFacade;
 
     @PostMapping(consumes = "application/json")
-    public void createAccount(@RequestBody AccountDto accountDto) {
+    public void createAccount(@RequestBody AccountDto accountDto) throws NotFoundException {
         accountFacade.createAccount(accountDto);
     }
 
@@ -37,12 +37,12 @@ public class AccountController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public void deleteAccount(@PathVariable("id") Long accountId) {
+    public void deleteAccount(@PathVariable("id") Long accountId) throws NotFoundException {
         accountFacade.deleteAccount(accountId);
     }
 
     @PutMapping(consumes = "application/json")
-    public AccountDto updateAccount(@RequestBody AccountDto accountDto) {
+    public AccountDto updateAccount(@RequestBody AccountDto accountDto) throws NotFoundException {
         return accountFacade.updateAccount(accountDto);
     }
 }

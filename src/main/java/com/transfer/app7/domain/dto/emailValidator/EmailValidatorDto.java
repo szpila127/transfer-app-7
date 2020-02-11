@@ -8,6 +8,6 @@ import lombok.Getter;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class EmailValidatorDto {
 
-    @JsonProperty
-    private boolean isValid;
+    @JsonProperty(value = "isValid")
+    private boolean valid;
 }

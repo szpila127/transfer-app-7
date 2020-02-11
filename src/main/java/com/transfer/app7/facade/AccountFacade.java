@@ -29,7 +29,7 @@ public class AccountFacade {
     @Autowired
     private AccountMapper accountMapper;
 
-    public void createAccount(AccountDto accountDto) throws NotFoundException {
+    public void createAccount(AccountDto accountDto) {
         LOGGER.info("Creating an account");
         accountService.save(accountMapper.mapToAccount(accountDto));
         AppEventDto appEventDto = new AppEventDto(
@@ -49,12 +49,12 @@ public class AccountFacade {
         return accountService.countAccounts();
     }
 
-    public AccountDto getAccount(Long accountId) throws NotFoundException {
+    public AccountDto getAccount(Long accountId) {
         LOGGER.info("Getting account by id: " + accountId);
         return accountMapper.mapToAccountDto(accountService.getAccount(accountId).orElseThrow(NotFoundException::new));
     }
 
-    public void deleteAccount(Long accountId) throws NotFoundException {
+    public void deleteAccount(Long accountId) {
         AppEventDto appEventDto = new AppEventDto(
                 Event.DELETE,
                 "Account id: " + accountId + ", User email: " + userFacade.getUser(accountService.getAccount(accountId).get().getUser().getId()).getEmail());
@@ -63,7 +63,7 @@ public class AccountFacade {
         LOGGER.info("Account: " + accountId + " deleted");
     }
 
-    public AccountDto updateAccount(AccountDto accountDto) throws NotFoundException {
+    public AccountDto updateAccount(AccountDto accountDto) {
         AppEventDto appEventDto = new AppEventDto(
                 Event.UPDATE,
                 "Account id: " + accountDto.getId() +

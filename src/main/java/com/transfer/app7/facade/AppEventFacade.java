@@ -42,7 +42,7 @@ public class AppEventFacade {
         return appEventService.countEvents();
     }
 
-    public AppEventDto getEvent(Long eventId) throws NotFoundException {
+    public AppEventDto getEvent(Long eventId) {
         LOGGER.info("Getting event by id: " + eventId);
         return appEventMapper.mapToAppEventDto(appEventService.getEvent(eventId).orElseThrow(NotFoundException::new));
     }

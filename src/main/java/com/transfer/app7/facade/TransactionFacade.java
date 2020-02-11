@@ -17,7 +17,6 @@ import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 
 @Component
 public class TransactionFacade {
@@ -40,33 +39,37 @@ public class TransactionFacade {
 
     public void createTransaction(TransactionDto transactionDto) {
         LOGGER.info("Creating a transaction...");
-        Optional<Account> accountOut = accountService.getAccount(transactionDto.getAccountOutId());
-        Optional<Account> accountIn = accountService.getAccount(transactionDto.getAccountInId());
+        Account accountOut = accountService.getAccount(transactionDto.getAccountOutId()).orElseThrow(NotFoundException::new);
+        Account accountIn = accountService.getAccount(transactionDto.getAccountInId()).orElseThrow(NotFoundException::new);
         LOGGER.info("Getting info about accounts currencies");
-        Currency accountOutCurrency = accountOut.get().getCurrency();
-        Currency accountInCurrency = accountIn.get().getCurrency();
+        Currency accountOutCurrency = accountOut.getCurrency();
+        Currency accountInCurrency = accountIn.getCurrency();
         LOGGER.info("Getting actual currencies courses");
         double outCurrencyFactor = nbpApiClient.getCurrencyFactor(accountOutCurrency.toString());
         double inCurrencyFactor = nbpApiClient.getCurrencyFactor(accountInCurrency.toString());
         double currencyChanger = inCurrencyFactor / outCurrencyFactor;
-        int result = accountOut.get().getBalance().compareTo(transactionDto.getAmount().multiply(new BigDecimal(currencyChanger)));
-        if (result >= 0) {
-            LOGGER.info("Transaction in progress...");
-            accountOut.get().setBalance(accountOut.get().getBalance().subtract(transactionDto.getAmount().multiply(new BigDecimal(currencyChanger))));
-            accountService.save(accountOut.get());
-            accountIn.get().setBalance(accountIn.get().getBalance().add(transactionDto.getAmount()));
-            accountService.save(accountIn.get());
-            transactionService.save(transactionMapper.mapToTransaction(transactionDto));
-            LOGGER.info("Transaction complete :)");
-            AppEventDto appEventDto = new AppEventDto(
-                    Event.CREATE,
-                    "Transaction: " +
-                            "amount: " + transactionDto.getAmount() +
-                            ", accountOutId: " + transactionDto.getAccountOutId() +
-                            ", accountInId: " + transactionDto.getAccountInId());
-            appEventFacade.createEvent(appEventDto);
+        boolean enoughMoney = accountOut.getBalance().compareTo(transactionDto.getAmount().multiply(new BigDecimal(currencyChanger))) > 0;
+        if (enoughMoney) {
+            handleTransaction(transactionDto, accountOut, accountIn, currencyChanger);
         } else
             LOGGER.error("Not enough money!");
+    }
+
+    private void handleTransaction(TransactionDto transactionDto, Account accountOut, Account accountIn, double currencyChanger) {
+        LOGGER.info("Transaction in progress...");
+        accountOut.setBalance(accountOut.getBalance().subtract(transactionDto.getAmount().multiply(new BigDecimal(currencyChanger))));
+        accountService.save(accountOut);
+        accountIn.setBalance(accountIn.getBalance().add(transactionDto.getAmount()));
+        accountService.save(accountIn);
+        transactionService.save(transactionMapper.mapToTransaction(transactionDto));
+        LOGGER.info("Transaction complete :)");
+        AppEventDto appEventDto = new AppEventDto(
+                Event.CREATE,
+                "Transaction: " +
+                        "amount: " + transactionDto.getAmount() +
+                        ", accountOutId: " + transactionDto.getAccountOutId() +
+                        ", accountInId: " + transactionDto.getAccountInId());
+        appEventFacade.createEvent(appEventDto);
     }
 
     public List<TransactionDto> getTransactions() {
@@ -79,7 +82,7 @@ public class TransactionFacade {
         return transactionService.countTransactions();
     }
 
-    public TransactionDto getTransaction(Long transactionId) throws NotFoundException {
+    public TransactionDto getTransaction(Long transactionId) {
         LOGGER.info("Getting transaction by id: " + transactionId);
         return transactionMapper.mapToTransactionDto(transactionService.getTransaction(transactionId).orElseThrow(NotFoundException::new));
     }
