@@ -3,6 +3,8 @@ package com.transfer.app7.facade;
 import com.transfer.app7.client.NbpApiClient;
 import com.transfer.app7.domain.Account;
 import com.transfer.app7.domain.Currency;
+import com.transfer.app7.domain.Event;
+import com.transfer.app7.domain.dto.AppEventDto;
 import com.transfer.app7.domain.dto.TransactionDto;
 import com.transfer.app7.exception.NotFoundException;
 import com.transfer.app7.mapper.TransactionMapper;
@@ -20,6 +22,9 @@ import java.util.Optional;
 @Component
 public class TransactionFacade {
     private static final Logger LOGGER = LoggerFactory.getLogger(TransactionFacade.class);
+
+    @Autowired
+    private AppEventFacade appEventFacade;
 
     @Autowired
     private NbpApiClient nbpApiClient;
@@ -53,6 +58,13 @@ public class TransactionFacade {
             accountService.save(accountIn.get());
             transactionService.save(transactionMapper.mapToTransaction(transactionDto));
             LOGGER.info("Transaction complete :)");
+            AppEventDto appEventDto = new AppEventDto(
+                    Event.CREATE,
+                    "Transaction: " +
+                            "amount: " + transactionDto.getAmount() +
+                            ", accountOutId: " + transactionDto.getAccountOutId() +
+                            ", accountInId: " + transactionDto.getAccountInId());
+            appEventFacade.createEvent(appEventDto);
         } else
             LOGGER.error("Not enough money!");
     }
@@ -73,12 +85,20 @@ public class TransactionFacade {
     }
 
     public void deleteTransaction(Long transactionId) {
+        AppEventDto appEventDto = new AppEventDto(
+                Event.DELETE,
+                "Transaction id: " + transactionId);
+        appEventFacade.createEvent(appEventDto);
         transactionService.deleteTransaction(transactionId);
         LOGGER.info("Transaction: " + transactionId + " deleted");
     }
 
     public TransactionDto updateTransaction(TransactionDto transactionDto) {
-        LOGGER.info("Updating transaction");
+        AppEventDto appEventDto = new AppEventDto(
+                Event.UPDATE,
+                "Transaction id: " + transactionDto.getId());
+        appEventFacade.createEvent(appEventDto);
+        LOGGER.info("Updating transaction id: " + transactionDto.getId());
         return transactionMapper.mapToTransactionDto(transactionService.save(transactionMapper.mapToTransaction(transactionDto)));
     }
 }

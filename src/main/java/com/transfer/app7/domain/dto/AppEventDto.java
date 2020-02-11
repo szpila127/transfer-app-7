@@ -23,4 +23,9 @@ public class AppEventDto {
     private Event event;
 
     private String information;
+
+    public AppEventDto(Event event, String information) {
+        this.event = event;
+        this.information = information;
+    }
 }
