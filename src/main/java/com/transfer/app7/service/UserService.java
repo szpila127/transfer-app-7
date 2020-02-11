@@ -1,6 +1,5 @@
 package com.transfer.app7.service;
 
-import com.transfer.app7.domain.Account;
 import com.transfer.app7.domain.User;
 import com.transfer.app7.repository.AccountRepository;
 import com.transfer.app7.repository.UserRepository;
@@ -37,17 +36,5 @@ public class UserService {
 
     public long countUsers() {
         return userRepository.count();
-    }
-
-    public void addUserAccount(final Long userId, final Account account) {
-        userRepository.findById(userId).get().getAccounts().add(account);
-    }
-
-    public void deleteUserAccount(final Long userId, final Account account) {
-        userRepository.findById(userId).get().getAccounts().remove(account);
-    }
-
-    public List<Account> getUserAccounts(final Long userId) {
-        return userRepository.findById(userId).get().getAccounts();
     }
 }

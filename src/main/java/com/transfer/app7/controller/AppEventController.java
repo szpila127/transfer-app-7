@@ -1,11 +1,13 @@
 package com.transfer.app7.controller;
 
+import com.transfer.app7.domain.Event;
 import com.transfer.app7.domain.dto.AppEventDto;
 import com.transfer.app7.exception.NotFoundException;
 import com.transfer.app7.facade.AppEventFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -16,14 +18,19 @@ public class AppEventController {
     @Autowired
     private AppEventFacade appEventFacade;
 
-    @PostMapping(consumes = "application/json")
-    public void createEvent(@RequestBody AppEventDto appEventDto) {
-        appEventFacade.createEvent(appEventDto);
-    }
-
     @GetMapping
     public List<AppEventDto> getEvents() {
         return appEventFacade.getEvents();
+    }
+
+    @GetMapping(value = "/{date}")
+    public List<AppEventDto> getEventsByDate(@PathVariable String date) {
+        return appEventFacade.getEventsByDate(LocalDate.parse(date));
+    }
+
+    @GetMapping(value = "/{type}")
+    public List<AppEventDto> getEventsByType(@PathVariable String type) {
+        return appEventFacade.getEventsByType(Event.valueOf(type.toUpperCase()));
     }
 
     @GetMapping(value = "/count")
@@ -34,15 +41,5 @@ public class AppEventController {
     @GetMapping(value = "/{id}")
     public AppEventDto getEvent(@PathVariable("id") Long eventId) throws NotFoundException {
         return appEventFacade.getEvent(eventId);
-    }
-
-    @DeleteMapping(value = "/{id}")
-    public void deleteEvent(@PathVariable("id") Long eventId) {
-        appEventFacade.deleteEvent(eventId);
-    }
-
-    @PutMapping(consumes = "application/json")
-    public AppEventDto updateEvent(@RequestBody AppEventDto appEventDto) {
-        return appEventFacade.updateEvent(appEventDto);
     }
 }

@@ -14,6 +14,7 @@ public class AppEventMapper {
         return new AppEvent(
                 appEventDto.getId(),
                 appEventDto.getDate(),
+                appEventDto.getTime(),
                 appEventDto.getEvent(),
                 appEventDto.getInformation());
     }
@@ -21,6 +22,7 @@ public class AppEventMapper {
         return new AppEventDto(
                 appEvent.getId(),
                 appEvent.getDate(),
+                appEvent.getTime(),
                 appEvent.getEvent(),
                 appEvent.getInformation());
     }
@@ -30,6 +32,7 @@ public class AppEventMapper {
                 .map(appEvent -> new AppEventDto(
                         appEvent.getId(),
                         appEvent.getDate(),
+                        appEvent.getTime(),
                         appEvent.getEvent(),
                         appEvent.getInformation()))
                 .collect(Collectors.toList());

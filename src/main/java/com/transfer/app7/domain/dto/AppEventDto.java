@@ -7,7 +7,8 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Getter
 @AllArgsConstructor
@@ -15,7 +16,8 @@ import java.time.LocalDateTime;
 public class AppEventDto {
 
     private Long id;
-    private LocalDateTime date = LocalDateTime.now();
+    private LocalDate date = LocalDate.now();
+    private LocalTime time = LocalTime.now();
 
     @Enumerated(EnumType.STRING)
     private Event event;
