@@ -1,7 +1,6 @@
 package com.transfer.app7.repository;
 
 import com.transfer.app7.domain.AppEvent;
-import com.transfer.app7.domain.Event;
 import org.springframework.data.repository.CrudRepository;
 
 import java.time.LocalDate;
@@ -14,7 +13,6 @@ public interface AppEventRepository extends CrudRepository<AppEvent, Long> {
     List<AppEvent> findAll();
 
     List<AppEvent> findByDate(LocalDate date);
-    List<AppEvent> findByType(Event event);
 
     @Override
     AppEvent save(AppEvent appEvent);

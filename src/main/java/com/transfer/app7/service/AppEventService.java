@@ -1,7 +1,6 @@
 package com.transfer.app7.service;
 
 import com.transfer.app7.domain.AppEvent;
-import com.transfer.app7.domain.Event;
 import com.transfer.app7.repository.AppEventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,10 +21,6 @@ public class AppEventService {
 
     public List<AppEvent> getByDate(LocalDate date) {
         return appEventRepository.findByDate(date);
-    }
-
-    public List<AppEvent> getByType(Event event) {
-        return appEventRepository.findByType(event);
     }
 
     public AppEvent save(AppEvent appEvent) {

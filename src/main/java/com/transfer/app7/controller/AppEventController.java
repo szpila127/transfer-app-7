@@ -1,6 +1,5 @@
 package com.transfer.app7.controller;
 
-import com.transfer.app7.domain.Event;
 import com.transfer.app7.domain.dto.AppEventDto;
 import com.transfer.app7.exception.NotFoundException;
 import com.transfer.app7.facade.AppEventFacade;
@@ -18,19 +17,19 @@ public class AppEventController {
     @Autowired
     private AppEventFacade appEventFacade;
 
+    @PostMapping(consumes = "application/json")
+    public void createEvent(@RequestBody AppEventDto appEventDto) {
+        appEventFacade.createEvent(appEventDto);
+    }
+
     @GetMapping
     public List<AppEventDto> getEvents() {
         return appEventFacade.getEvents();
     }
 
-    @GetMapping(value = "/{date}")
+    @GetMapping(value = "/date/{date}")
     public List<AppEventDto> getEventsByDate(@PathVariable String date) {
         return appEventFacade.getEventsByDate(LocalDate.parse(date));
-    }
-
-    @GetMapping(value = "/{type}")
-    public List<AppEventDto> getEventsByType(@PathVariable String type) {
-        return appEventFacade.getEventsByType(Event.valueOf(type.toUpperCase()));
     }
 
     @GetMapping(value = "/count")

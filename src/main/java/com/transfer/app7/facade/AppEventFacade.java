@@ -1,6 +1,5 @@
 package com.transfer.app7.facade;
 
-import com.transfer.app7.domain.Event;
 import com.transfer.app7.domain.dto.AppEventDto;
 import com.transfer.app7.exception.NotFoundException;
 import com.transfer.app7.mapper.AppEventMapper;
@@ -30,10 +29,6 @@ public class AppEventFacade {
 
     public List<AppEventDto> getEventsByDate(LocalDate date) {
         return appEventMapper.mapToAppEventDtoList(appEventService.getByDate(date));
-    }
-
-    public List<AppEventDto> getEventsByType(Event event) {
-        return appEventMapper.mapToAppEventDtoList(appEventService.getByType(event));
     }
 
     public Long countEvents() {
