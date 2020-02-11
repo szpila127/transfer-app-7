@@ -1,7 +1,6 @@
 package com.transfer.app7.service;
 
 import com.transfer.app7.domain.User;
-import com.transfer.app7.repository.AccountRepository;
 import com.transfer.app7.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,9 +13,6 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
-
-    @Autowired
-    private AccountRepository accountRepository;
 
     public List<User> getAllUsers() {
         return userRepository.findAll();

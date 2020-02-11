@@ -1,7 +1,6 @@
 package com.transfer.app7.controller;
 
 import com.transfer.app7.domain.dto.AccountDto;
-import com.transfer.app7.exception.NotFoundException;
 import com.transfer.app7.facade.AccountFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -17,8 +16,8 @@ public class AccountController {
     private AccountFacade accountFacade;
 
     @PostMapping(consumes = "application/json")
-    public void createAccount(@RequestBody AccountDto accountDto) throws NotFoundException {
-        accountFacade.createAccount(accountDto);
+    public String createAccount(@RequestBody AccountDto accountDto) {
+        return accountFacade.createAccount(accountDto);
     }
 
     @GetMapping
@@ -32,17 +31,17 @@ public class AccountController {
     }
 
     @GetMapping(value = "/{id}")
-    public AccountDto getAccount(@PathVariable("id") Long accountId) throws NotFoundException {
+    public AccountDto getAccount(@PathVariable("id") Long accountId) {
         return accountFacade.getAccount(accountId);
     }
 
     @DeleteMapping(value = "/{id}")
-    public void deleteAccount(@PathVariable("id") Long accountId) throws NotFoundException {
-        accountFacade.deleteAccount(accountId);
+    public String deleteAccount(@PathVariable("id") Long accountId) {
+        return accountFacade.deleteAccount(accountId);
     }
 
     @PutMapping(consumes = "application/json")
-    public AccountDto updateAccount(@RequestBody AccountDto accountDto) throws NotFoundException {
+    public AccountDto updateAccount(@RequestBody AccountDto accountDto) {
         return accountFacade.updateAccount(accountDto);
     }
 }

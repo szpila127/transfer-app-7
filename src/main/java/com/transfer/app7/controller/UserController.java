@@ -17,8 +17,8 @@ public class UserController {
     private UserFacade userFacade;
 
     @PostMapping(consumes = "application/json")
-    public void createUser(@RequestBody UserDto userDto) {
-        userFacade.createUser(userDto);
+    public String createUser(@RequestBody UserDto userDto) {
+        return userFacade.createUser(userDto);
     }
 
     @GetMapping
@@ -37,8 +37,8 @@ public class UserController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public void deleteUser(@PathVariable("id") Long userId) {
-        userFacade.deleteUser(userId);
+    public String deleteUser(@PathVariable("id") Long userId) {
+        return userFacade.deleteUser(userId);
     }
 
     @PutMapping(consumes = "application/json")

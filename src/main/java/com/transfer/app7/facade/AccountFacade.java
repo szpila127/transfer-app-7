@@ -29,7 +29,7 @@ public class AccountFacade {
     @Autowired
     private AccountMapper accountMapper;
 
-    public void createAccount(AccountDto accountDto) {
+    public String createAccount(AccountDto accountDto) {
         LOGGER.info("Creating an account");
         accountService.save(accountMapper.mapToAccount(accountDto));
         AppEventDto appEventDto = new AppEventDto(
@@ -37,6 +37,7 @@ public class AccountFacade {
                 "Account " + accountDto.getCurrency() + " for " + userFacade.getUser(accountDto.getUserId()).getEmail() +
                         ", balance: " + accountDto.getBalance() + " " + accountDto.getCurrency());
         appEventFacade.createEvent(appEventDto);
+        return "Account created.";
     }
 
     public List<AccountDto> getAccounts() {
@@ -54,22 +55,23 @@ public class AccountFacade {
         return accountMapper.mapToAccountDto(accountService.getAccount(accountId).orElseThrow(NotFoundException::new));
     }
 
-    public void deleteAccount(Long accountId) {
+    public String deleteAccount(Long accountId) {
         AppEventDto appEventDto = new AppEventDto(
                 Event.DELETE,
-                "Account id: " + accountId + ", User email: " + userFacade.getUser(accountService.getAccount(accountId).get().getUser().getId()).getEmail());
+                "Account id: " + accountId + ", User email: " + userFacade.getUser(accountService.getAccount(accountId).orElseThrow(NotFoundException::new).getUser().getId()).getEmail());
         appEventFacade.createEvent(appEventDto);
         accountService.deleteAccount(accountId);
         LOGGER.info("Account: " + accountId + " deleted");
+        return "Account deleted.";
     }
 
     public AccountDto updateAccount(AccountDto accountDto) {
         AppEventDto appEventDto = new AppEventDto(
                 Event.UPDATE,
                 "Account id: " + accountDto.getId() +
-                        ", balance: " + accountService.getAccount(accountDto.getId()).get().getBalance() + " -> " + accountDto.getBalance() +
-                        ", currency: " + accountService.getAccount(accountDto.getId()).get().getCurrency() + " -> " + accountDto.getCurrency() +
-                        ", userId: " + accountService.getAccount(accountDto.getId()).get().getUser().getId() + " -> " + accountDto.getUserId());
+                        ", balance: " + accountService.getAccount(accountDto.getId()).orElseThrow(NotFoundException::new).getBalance() + " -> " + accountDto.getBalance() +
+                        ", currency: " + accountService.getAccount(accountDto.getId()).orElseThrow(NotFoundException::new).getCurrency() + " -> " + accountDto.getCurrency() +
+                        ", userId: " + accountService.getAccount(accountDto.getId()).orElseThrow(NotFoundException::new).getUser().getId() + " -> " + accountDto.getUserId());
         appEventFacade.createEvent(appEventDto);
         LOGGER.info("Updating account id: " + accountDto.getId());
         return accountMapper.mapToAccountDto(accountService.save(accountMapper.mapToAccount(accountDto)));

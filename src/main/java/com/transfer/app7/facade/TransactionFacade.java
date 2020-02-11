@@ -13,11 +13,13 @@ import com.transfer.app7.service.TransactionService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
 import java.util.List;
 
+@EnableAspectJAutoProxy
 @Component
 public class TransactionFacade {
     private static final Logger LOGGER = LoggerFactory.getLogger(TransactionFacade.class);
@@ -37,7 +39,7 @@ public class TransactionFacade {
     @Autowired
     private TransactionMapper transactionMapper;
 
-    public void createTransaction(TransactionDto transactionDto) {
+    public String createTransaction(TransactionDto transactionDto) {
         LOGGER.info("Creating a transaction...");
         Account accountOut = accountService.getAccount(transactionDto.getAccountOutId()).orElseThrow(NotFoundException::new);
         Account accountIn = accountService.getAccount(transactionDto.getAccountInId()).orElseThrow(NotFoundException::new);
@@ -51,8 +53,11 @@ public class TransactionFacade {
         boolean enoughMoney = accountOut.getBalance().compareTo(transactionDto.getAmount().multiply(new BigDecimal(currencyChanger))) > 0;
         if (enoughMoney) {
             handleTransaction(transactionDto, accountOut, accountIn, currencyChanger);
-        } else
+            return "Transaction complete.";
+        } else {
             LOGGER.error("Not enough money!");
+            return "Not enough money!";
+        }
     }
 
     private void handleTransaction(TransactionDto transactionDto, Account accountOut, Account accountIn, double currencyChanger) {
@@ -66,7 +71,7 @@ public class TransactionFacade {
         AppEventDto appEventDto = new AppEventDto(
                 Event.CREATE,
                 "Transaction: " +
-                        "amount: " + transactionDto.getAmount() +
+                        "amount: " + transactionDto.getAmount() + " " + accountIn.getCurrency() +
                         ", accountOutId: " + transactionDto.getAccountOutId() +
                         ", accountInId: " + transactionDto.getAccountInId());
         appEventFacade.createEvent(appEventDto);

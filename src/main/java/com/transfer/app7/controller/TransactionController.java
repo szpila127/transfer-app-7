@@ -17,8 +17,8 @@ public class TransactionController {
     private TransactionFacade transactionFacade;
 
     @PostMapping(consumes = "application/json")
-    public void createTransaction(@RequestBody TransactionDto transactionDto) {
-        transactionFacade.createTransaction(transactionDto);
+    public String createTransaction(@RequestBody TransactionDto transactionDto) {
+        return transactionFacade.createTransaction(transactionDto);
     }
 
     @GetMapping

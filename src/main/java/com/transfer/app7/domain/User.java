@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.Objects;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,4 +29,18 @@ public class User {
             cascade = CascadeType.ALL
     )
     private List<Account> accounts;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(email, user.email) &&
+                Objects.equals(pesel, user.pesel);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(email, pesel);
+    }
 }
