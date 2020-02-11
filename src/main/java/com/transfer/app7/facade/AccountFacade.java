@@ -1,7 +1,7 @@
 package com.transfer.app7.facade;
 
 import com.transfer.app7.exception.NotFoundException;
-import com.transfer.app7.domain.AccountDto;
+import com.transfer.app7.domain.dto.AccountDto;
 import com.transfer.app7.mapper.AccountMapper;
 import com.transfer.app7.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;

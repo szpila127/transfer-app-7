@@ -1,7 +1,7 @@
 package com.transfer.app7.mapper;
 
 import com.transfer.app7.domain.User;
-import com.transfer.app7.domain.UserDto;
+import com.transfer.app7.domain.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -30,17 +30,6 @@ public class UserMapper {
                 user.getPassword(),
                 user.getPesel(),
                 accountMapper.mapToAccountDtoList(user.getAccounts()));
-    }
-
-    public List<User> mapToUserList(final List<UserDto> userDtoList) {
-        return userDtoList.stream()
-                .map(userDto -> new User(
-                        userDto.getId(),
-                        userDto.getEmail(),
-                        userDto.getPassword(),
-                        userDto.getPesel(),
-                        accountMapper.mapToAccountList(userDto.getAccounts())))
-                .collect(Collectors.toList());
     }
 
     public List<UserDto> mapToUserDtoList(final List<User> userList) {

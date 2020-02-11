@@ -1,4 +1,4 @@
-package com.transfer.app7.domain;
+package com.transfer.app7.domain.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

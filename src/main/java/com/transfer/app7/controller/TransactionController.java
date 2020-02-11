@@ -1,6 +1,6 @@
 package com.transfer.app7.controller;
 
-import com.transfer.app7.domain.TransactionDto;
+import com.transfer.app7.domain.dto.TransactionDto;
 import com.transfer.app7.exception.NotFoundException;
 import com.transfer.app7.facade.TransactionFacade;
 import org.springframework.beans.factory.annotation.Autowired;

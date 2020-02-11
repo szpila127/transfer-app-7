@@ -1,6 +1,6 @@
 package com.transfer.app7.controller;
 
-import com.transfer.app7.domain.UserDto;
+import com.transfer.app7.domain.dto.UserDto;
 import com.transfer.app7.exception.NotFoundException;
 import com.transfer.app7.facade.UserFacade;
 import org.springframework.beans.factory.annotation.Autowired;

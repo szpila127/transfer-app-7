@@ -1,7 +1,7 @@
 package com.transfer.app7.mapper;
 
 import com.transfer.app7.domain.Account;
-import com.transfer.app7.domain.AccountDto;
+import com.transfer.app7.domain.dto.AccountDto;
 import com.transfer.app7.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package com.transfer.app7.domain.nbpAPI;
+package com.transfer.app7.domain.dto.nbpAPI;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -6,11 +6,11 @@ import lombok.Getter;
 
 @Getter
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class RatesDto {
+public class ResponseDto {
 
     @JsonProperty
-    private String effectiveDate;
+    private String code;
 
     @JsonProperty
-    private double mid;
+    private RatesDto[] rates;
 }
