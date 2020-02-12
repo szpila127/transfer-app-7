@@ -42,6 +42,7 @@ public class UserFacade {
                         Event.CREATE,
                         "User - email: " + userDto.getEmail());
                 appEventFacade.createEvent(appEventDto);
+                LOGGER.info("User created.");
                 return "User created.";
             } else {
                 LOGGER.error("Invalid email!");
