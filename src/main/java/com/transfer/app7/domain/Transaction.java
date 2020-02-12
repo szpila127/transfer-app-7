@@ -1,7 +1,9 @@
 package com.transfer.app7.domain;
 
-import lombok.*;
-import org.springframework.data.annotation.Immutable;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -12,7 +14,6 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-@Immutable
 public class Transaction {
 
     @Id

@@ -1,7 +1,6 @@
 package com.transfer.app7.controller;
 
 import com.transfer.app7.domain.dto.TransactionDto;
-import com.transfer.app7.exception.NotFoundException;
 import com.transfer.app7.facade.TransactionFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +20,11 @@ public class TransactionController {
         return transactionFacade.createTransaction(transactionDto);
     }
 
+    @PostMapping(value = "/{id}")
+    public String returnTransaction(@PathVariable("id") Long transactionId) {
+        return transactionFacade.returnTransaction(transactionId);
+    }
+
     @GetMapping
     public List<TransactionDto> getTransactions() {
         return transactionFacade.getTransactions();
@@ -32,7 +36,7 @@ public class TransactionController {
     }
 
     @GetMapping(value = "/{id}")
-    public TransactionDto getTransaction(@PathVariable("id") Long transactionId) throws NotFoundException {
+    public TransactionDto getTransaction(@PathVariable("id") Long transactionId) {
         return transactionFacade.getTransaction(transactionId);
     }
 

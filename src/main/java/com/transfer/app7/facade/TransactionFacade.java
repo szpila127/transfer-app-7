@@ -75,6 +75,16 @@ public class TransactionFacade {
         appEventFacade.createEvent(appEventDto);
     }
 
+    public String returnTransaction(Long transactionId) {
+        TransactionDto transactionDtoGet = transactionMapper.mapToTransactionDto(transactionService.getTransaction(transactionId).orElseThrow(NotFoundException::new));
+        Long newAccountOutId = transactionDtoGet.getAccountInId();
+        Long newAccountInId = transactionDtoGet.getAccountOutId();
+        transactionDtoGet.setAccountInId(newAccountInId);
+        transactionDtoGet.setAccountOutId(newAccountOutId);
+        transactionDtoGet.setId(null);
+        return createTransaction(transactionDtoGet);
+    }
+
     public List<TransactionDto> getTransactions() {
         LOGGER.info("Getting list of transactions");
         return transactionMapper.mapToTransactionDtoList(transactionService.getAllTransactions());
