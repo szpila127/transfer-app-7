@@ -1,5 +1,6 @@
 package com.transfer.app7.domain.dto;
 
+import com.transfer.app7.domain.Currency;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,6 +16,7 @@ public class TransactionDto {
     private Long id;
     private LocalDateTime date = LocalDateTime.now();
     private BigDecimal amount;
+    private Currency currency;
     private Long accountOutId;
     private Long accountInId;
 }

@@ -1,9 +1,7 @@
 package com.transfer.app7.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.springframework.data.annotation.Immutable;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -14,6 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
+@Immutable
 public class Transaction {
 
     @Id
@@ -22,6 +21,9 @@ public class Transaction {
 
     private LocalDateTime date;
     private BigDecimal amount;
+
+    @Enumerated(EnumType.STRING)
+    private Currency currency;
 
     @OneToOne
     @JoinColumn(name = "ACCOUNT_OUT_ID")

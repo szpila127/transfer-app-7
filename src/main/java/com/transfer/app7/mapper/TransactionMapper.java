@@ -20,6 +20,7 @@ public class TransactionMapper {
                 transactionDto.getId(),
                 transactionDto.getDate(),
                 transactionDto.getAmount(),
+                transactionDto.getCurrency(),
                 accountRepository.findById(transactionDto.getAccountOutId()).orElseThrow(null),
                 accountRepository.findById(transactionDto.getAccountInId()).orElseThrow(null));
     }
@@ -29,6 +30,7 @@ public class TransactionMapper {
                 transaction.getId(),
                 transaction.getDate(),
                 transaction.getAmount(),
+                transaction.getCurrency(),
                 transaction.getAccountOut().getId(),
                 transaction.getAccountIn().getId());
     }
@@ -39,6 +41,7 @@ public class TransactionMapper {
                         transaction.getId(),
                         transaction.getDate(),
                         transaction.getAmount(),
+                        transaction.getCurrency(),
                         transaction.getAccountOut().getId(),
                         transaction.getAccountIn().getId()))
                 .collect(Collectors.toList());

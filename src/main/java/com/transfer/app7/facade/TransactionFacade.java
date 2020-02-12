@@ -44,15 +44,18 @@ public class TransactionFacade {
         Account accountOut = accountService.getAccount(transactionDto.getAccountOutId()).orElseThrow(NotFoundException::new);
         Account accountIn = accountService.getAccount(transactionDto.getAccountInId()).orElseThrow(NotFoundException::new);
         LOGGER.info("Getting info about accounts currencies");
+        Currency transactionCurrency = transactionDto.getCurrency();
         Currency accountOutCurrency = accountOut.getCurrency();
         Currency accountInCurrency = accountIn.getCurrency();
         LOGGER.info("Getting actual currencies courses");
         double outCurrencyFactor = nbpApiClient.getCurrencyFactor(accountOutCurrency.toString());
         double inCurrencyFactor = nbpApiClient.getCurrencyFactor(accountInCurrency.toString());
-        double currencyChanger = inCurrencyFactor / outCurrencyFactor;
-        boolean enoughMoney = accountOut.getBalance().compareTo(transactionDto.getAmount().multiply(new BigDecimal(currencyChanger))) > 0;
+        double transactionCurrencyFactor = nbpApiClient.getCurrencyFactor(transactionCurrency.toString());
+        double currencyChangerOut = transactionCurrencyFactor / outCurrencyFactor;
+        double currencyChangerIn = inCurrencyFactor / transactionCurrencyFactor;
+        boolean enoughMoney = accountOut.getBalance().compareTo(transactionDto.getAmount().multiply(new BigDecimal(currencyChangerOut))) > 0;
         if (enoughMoney) {
-            handleTransaction(transactionDto, accountOut, accountIn, currencyChanger);
+            handleTransaction(transactionDto, accountOut, accountIn, currencyChangerOut, currencyChangerIn);
             return "Transaction complete.";
         } else {
             LOGGER.error("Not enough money!");
@@ -60,18 +63,18 @@ public class TransactionFacade {
         }
     }
 
-    private void handleTransaction(TransactionDto transactionDto, Account accountOut, Account accountIn, double currencyChanger) {
+    private void handleTransaction(TransactionDto transactionDto, Account accountOut, Account accountIn, double currencyChangerOut, double currencyChangerIn) {
         LOGGER.info("Transaction in progress...");
-        accountOut.setBalance(accountOut.getBalance().subtract(transactionDto.getAmount().multiply(new BigDecimal(currencyChanger))));
+        accountOut.setBalance(accountOut.getBalance().subtract(transactionDto.getAmount().multiply(new BigDecimal(currencyChangerOut))));
         accountService.save(accountOut);
-        accountIn.setBalance(accountIn.getBalance().add(transactionDto.getAmount()));
+        accountIn.setBalance(accountIn.getBalance().add(transactionDto.getAmount().multiply(new BigDecimal(currencyChangerIn))));
         accountService.save(accountIn);
         transactionService.save(transactionMapper.mapToTransaction(transactionDto));
         LOGGER.info("Transaction complete :)");
         AppEventDto appEventDto = new AppEventDto(
                 Event.CREATE,
                 "Transaction: " +
-                        "amount: " + transactionDto.getAmount() + " " + accountIn.getCurrency() +
+                        "amount: " + transactionDto.getAmount() + " " + transactionDto.getCurrency() +
                         ", accountOutId: " + transactionDto.getAccountOutId() +
                         ", accountInId: " + transactionDto.getAccountInId());
         appEventFacade.createEvent(appEventDto);
