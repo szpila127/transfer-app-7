@@ -42,8 +42,7 @@ public class TransactionFacade {
         LOGGER.info("Creating a transaction...");
         Account accountOut = accountService.getAccount(transactionDto.getAccountOutId()).orElseThrow(NotFoundException::new);
         Account accountIn = accountService.getAccount(transactionDto.getAccountInId()).orElseThrow(NotFoundException::new);
-        LOGGER.info("Getting info about accounts currencies");
-        LOGGER.info("Getting actual currencies courses");
+        LOGGER.info("Getting info about accounts currencies, actual currencies courses");
         double outCurrencyFactor = nbpApiClient.getCurrencyFactor(accountOut.getCurrency().toString());
         double inCurrencyFactor = nbpApiClient.getCurrencyFactor(accountIn.getCurrency().toString());
         double transactionCurrencyFactor = nbpApiClient.getCurrencyFactor(transactionDto.getCurrency().toString());
@@ -52,6 +51,7 @@ public class TransactionFacade {
         boolean enoughMoney = accountOut.getBalance().compareTo(transactionDto.getAmount().multiply(new BigDecimal(currencyChangerOut))) > 0;
         if (enoughMoney) {
             handleTransaction(transactionDto, accountOut, accountIn, currencyChangerOut, currencyChangerIn);
+            LOGGER.info("Transaction complete.");
             return "Transaction complete.";
         } else {
             LOGGER.error("Not enough money!");
@@ -66,7 +66,6 @@ public class TransactionFacade {
         accountIn.setBalance(accountIn.getBalance().add(transactionDto.getAmount().multiply(new BigDecimal(currencyChangerIn))));
         accountService.save(accountIn);
         transactionService.save(transactionMapper.mapToTransaction(transactionDto));
-        LOGGER.info("Transaction complete :)");
         AppEventDto appEventDto = new AppEventDto(
                 Event.CREATE,
                 "Transaction: " +
