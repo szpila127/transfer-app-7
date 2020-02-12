@@ -2,7 +2,6 @@ package com.transfer.app7.facade;
 
 import com.transfer.app7.client.NbpApiClient;
 import com.transfer.app7.domain.Account;
-import com.transfer.app7.domain.Currency;
 import com.transfer.app7.domain.Event;
 import com.transfer.app7.domain.dto.AppEventDto;
 import com.transfer.app7.domain.dto.TransactionDto;
@@ -44,15 +43,12 @@ public class TransactionFacade {
         Account accountOut = accountService.getAccount(transactionDto.getAccountOutId()).orElseThrow(NotFoundException::new);
         Account accountIn = accountService.getAccount(transactionDto.getAccountInId()).orElseThrow(NotFoundException::new);
         LOGGER.info("Getting info about accounts currencies");
-        Currency transactionCurrency = transactionDto.getCurrency();
-        Currency accountOutCurrency = accountOut.getCurrency();
-        Currency accountInCurrency = accountIn.getCurrency();
         LOGGER.info("Getting actual currencies courses");
-        double outCurrencyFactor = nbpApiClient.getCurrencyFactor(accountOutCurrency.toString());
-        double inCurrencyFactor = nbpApiClient.getCurrencyFactor(accountInCurrency.toString());
-        double transactionCurrencyFactor = nbpApiClient.getCurrencyFactor(transactionCurrency.toString());
+        double outCurrencyFactor = nbpApiClient.getCurrencyFactor(accountOut.getCurrency().toString());
+        double inCurrencyFactor = nbpApiClient.getCurrencyFactor(accountIn.getCurrency().toString());
+        double transactionCurrencyFactor = nbpApiClient.getCurrencyFactor(transactionDto.getCurrency().toString());
         double currencyChangerOut = transactionCurrencyFactor / outCurrencyFactor;
-        double currencyChangerIn = inCurrencyFactor / transactionCurrencyFactor;
+        double currencyChangerIn = transactionCurrencyFactor / inCurrencyFactor;
         boolean enoughMoney = accountOut.getBalance().compareTo(transactionDto.getAmount().multiply(new BigDecimal(currencyChangerOut))) > 0;
         if (enoughMoney) {
             handleTransaction(transactionDto, accountOut, accountIn, currencyChangerOut, currencyChangerIn);
