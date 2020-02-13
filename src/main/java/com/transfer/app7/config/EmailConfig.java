@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Getter
 @Component
-public class MailConfig {
+public class EmailConfig {
 
     @Value("${spring.mail.username}")
     private String adminMail;
