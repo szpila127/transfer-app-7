@@ -2,6 +2,7 @@ package com.transfer.app7.mapper;
 
 import com.transfer.app7.domain.Transaction;
 import com.transfer.app7.domain.dto.TransactionDto;
+import com.transfer.app7.exception.NotFoundException;
 import com.transfer.app7.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,8 +22,8 @@ public class TransactionMapper {
                 transactionDto.getDate(),
                 transactionDto.getAmount(),
                 transactionDto.getCurrency(),
-                accountRepository.findById(transactionDto.getAccountOutId()).orElseThrow(null),
-                accountRepository.findById(transactionDto.getAccountInId()).orElseThrow(null));
+                accountRepository.findById(transactionDto.getAccountOutId()).orElseThrow(NotFoundException::new),
+                accountRepository.findById(transactionDto.getAccountInId()).orElseThrow(NotFoundException::new));
     }
 
     public TransactionDto mapToTransactionDto(final Transaction transaction) {
