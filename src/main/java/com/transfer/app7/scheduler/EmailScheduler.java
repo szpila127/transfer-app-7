@@ -25,14 +25,15 @@ public class EmailScheduler {
     @Autowired
     private AccountService accountService;
 
-//    @Scheduled(cron = "0 0 20 * * *")
-    @Scheduled(fixedDelay = 10000)
+    @Scheduled(cron = "0 0 20 * * *")
+//    @Scheduled(fixedDelay = 10000)
     public void sendInformationEmail() {
         long users = userService.countUsers();
         long accounts = accountService.countAccounts();
         emailService.send(new Mail(
                 emailConfig.getAdminMail(),
                 SUBJECT,
-                "Scheduler"));
+                "Users amount: " + users + ",\n" +
+                "Accounts amount: " + accounts));
     }
 }
