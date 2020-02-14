@@ -1,8 +1,7 @@
-package com.transfer.app7.mapper.user;
+package com.transfer.app7.mapper;
 
 import com.transfer.app7.domain.User;
 import com.transfer.app7.domain.dto.UserDto;
-import com.transfer.app7.mapper.UserMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

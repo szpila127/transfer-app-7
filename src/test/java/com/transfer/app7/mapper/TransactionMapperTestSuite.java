@@ -1,11 +1,10 @@
-package com.transfer.app7.mapper.transaction;
+package com.transfer.app7.mapper;
 
 import com.transfer.app7.domain.Account;
 import com.transfer.app7.domain.Currency;
 import com.transfer.app7.domain.Transaction;
 import com.transfer.app7.domain.User;
 import com.transfer.app7.domain.dto.TransactionDto;
-import com.transfer.app7.mapper.TransactionMapper;
 import com.transfer.app7.repository.AccountRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;

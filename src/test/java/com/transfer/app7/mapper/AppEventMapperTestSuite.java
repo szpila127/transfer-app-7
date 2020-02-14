@@ -1,9 +1,8 @@
-package com.transfer.app7.mapper.appEvent;
+package com.transfer.app7.mapper;
 
 import com.transfer.app7.domain.AppEvent;
 import com.transfer.app7.domain.Event;
 import com.transfer.app7.domain.dto.AppEventDto;
-import com.transfer.app7.mapper.AppEventMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
