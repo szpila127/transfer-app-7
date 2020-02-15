@@ -19,9 +19,8 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -85,7 +84,7 @@ public class AccountControllerTestSuite {
     }
 
     @Test
-    public void testCountAccounts() throws Exception{
+    public void testCountAccounts() throws Exception {
         //Given
         Long amount = 10L;
 
@@ -113,5 +112,14 @@ public class AccountControllerTestSuite {
     @Test
     public void testDeleteAcount() throws Exception {
         //Given
+        AccountDto accountDto1 = new AccountDto(1L, new BigDecimal(1000), Currency.EUR, 11L);
+
+        when(accountFacade.deleteAccount(1L)).thenReturn("Deleted");
+
+        //When & Then
+        mockMvc.perform(delete("/v1/ta7/account/1").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", is("Deleted")));
+        verify(accountFacade, times(1)).deleteAccount(accountDto1.getId());
     }
 }
