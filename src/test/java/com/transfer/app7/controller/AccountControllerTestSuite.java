@@ -85,8 +85,33 @@ public class AccountControllerTestSuite {
     }
 
     @Test
-    public void testCountAccounts() {
+    public void testCountAccounts() throws Exception{
+        //Given
+        Long amount = 10L;
 
+        when(accountFacade.countAccounts()).thenReturn(amount);
+
+        //When & Then
+        mockMvc.perform(get("/v1/ta7/account/count").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", is(10)));
     }
 
+    @Test
+    public void testGetAccount() throws Exception {
+        //Given
+        AccountDto accountDto1 = new AccountDto(1L, new BigDecimal(1000), Currency.EUR, 11L);
+
+        when(accountFacade.getAccount(1L)).thenReturn(accountDto1);
+
+        //When & Then
+        mockMvc.perform(get("/v1/ta7/account/1").contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.currency", is("EUR")));
+    }
+
+    @Test
+    public void testDeleteAcount() throws Exception {
+        //Given
+    }
 }
