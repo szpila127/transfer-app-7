@@ -44,9 +44,4 @@ public class EmailServiceTestSuite {
         //Then
         verify(javaMailSender, times(1)).send(mailMessage);
     }
-
-    @Test
-    public void testCreateMailMessage() {
-
-    }
 }
