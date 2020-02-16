@@ -6,6 +6,7 @@ import com.transfer.app7.domain.dto.AccountDto;
 import com.transfer.app7.facade.AccountFacade;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -121,5 +122,24 @@ public class AccountControllerTestSuite {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is("Deleted")));
         verify(accountFacade, times(1)).deleteAccount(accountDto1.getId());
+    }
+
+    @Test
+    public void testUpdateAccount() throws Exception {
+        //Given
+        AccountDto accountDto1 = new AccountDto(1L, new BigDecimal(1000), Currency.EUR, 11L);
+
+        when(accountFacade.updateAccount(ArgumentMatchers.any(AccountDto.class))).thenReturn(accountDto1);
+
+        Gson gson = new Gson();
+        String jsonContent = gson.toJson(accountDto1);
+
+        //When & then
+        mockMvc.perform(put("/v1/ta7/account").contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8")
+                .content(jsonContent))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", is(1)));
+        verify(accountFacade, times(1)).updateAccount(ArgumentMatchers.any(AccountDto.class));
     }
 }
