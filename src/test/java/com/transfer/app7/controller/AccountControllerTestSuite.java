@@ -60,7 +60,8 @@ public class AccountControllerTestSuite {
         when(accountFacade.getAccounts()).thenReturn(listDto);
 
         //When & Then
-        mockMvc.perform(get("/v1/ta7/account").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/v1/ta7/account")
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(200))
                 .andExpect(jsonPath("$", hasSize(0)));
     }
@@ -77,7 +78,8 @@ public class AccountControllerTestSuite {
         when(accountFacade.getAccounts()).thenReturn(listDto);
 
         //When & Then
-        mockMvc.perform(get("/v1/ta7/account").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/v1/ta7/account")
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(200))
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].id", is(1)))
@@ -92,7 +94,8 @@ public class AccountControllerTestSuite {
         when(accountFacade.countAccounts()).thenReturn(amount);
 
         //When & Then
-        mockMvc.perform(get("/v1/ta7/account/count").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/v1/ta7/account/count")
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(10)));
     }
@@ -105,7 +108,8 @@ public class AccountControllerTestSuite {
         when(accountFacade.getAccount(1L)).thenReturn(accountDto1);
 
         //When & Then
-        mockMvc.perform(get("/v1/ta7/account/1").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/v1/ta7/account/1")
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.currency", is("EUR")));
     }
@@ -118,7 +122,8 @@ public class AccountControllerTestSuite {
         when(accountFacade.deleteAccount(1L)).thenReturn("Deleted");
 
         //When & Then
-        mockMvc.perform(delete("/v1/ta7/account/1").contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(delete("/v1/ta7/account/1")
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is("Deleted")));
         verify(accountFacade, times(1)).deleteAccount(accountDto1.getId());
@@ -135,7 +140,8 @@ public class AccountControllerTestSuite {
         String jsonContent = gson.toJson(accountDto1);
 
         //When & then
-        mockMvc.perform(put("/v1/ta7/account").contentType(MediaType.APPLICATION_JSON)
+        mockMvc.perform(put("/v1/ta7/account")
+                .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
                 .content(jsonContent))
                 .andExpect(status().isOk())
