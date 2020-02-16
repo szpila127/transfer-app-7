@@ -53,7 +53,7 @@ public class AccountControllerTestSuite {
     }
 
     @Test
-    public void shouldGetEmptyAccountsLits() throws Exception {
+    public void shouldGetEmptyAccountsList() throws Exception {
         //Given
         List<AccountDto> listDto = new ArrayList<>();
 
