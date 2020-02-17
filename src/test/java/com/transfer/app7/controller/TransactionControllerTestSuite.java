@@ -1,6 +1,8 @@
 package com.transfer.app7.controller;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.transfer.app7.config.LocalDateAdapter;
 import com.transfer.app7.domain.Currency;
 import com.transfer.app7.domain.dto.TransactionDto;
 import com.transfer.app7.facade.TransactionFacade;
@@ -41,7 +43,10 @@ public class TransactionControllerTestSuite {
         //Given
         TransactionDto transactionDto = new TransactionDto(1L, LocalDateTime.parse("2010-02-17T12:58:05"), new BigDecimal(1000), Currency.EUR, 11L, 12L);
 
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .registerTypeAdapter(LocalDateTime.class, new LocalDateAdapter())
+                .create();
         String jsonContent = gson.toJson(transactionDto);
 
         //When & Then
@@ -127,7 +132,10 @@ public class TransactionControllerTestSuite {
 
         when(transactionFacade.updateTransaction(ArgumentMatchers.any(TransactionDto.class))).thenReturn(transactionDto1);
 
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .registerTypeAdapter(LocalDateTime.class, new LocalDateAdapter())
+                .create();
         String jsonContent = gson.toJson(transactionDto1);
 
         //When & Then

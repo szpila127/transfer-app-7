@@ -1,6 +1,8 @@
 package com.transfer.app7.controller;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.transfer.app7.config.LocalDateAdapter;
 import com.transfer.app7.domain.Event;
 import com.transfer.app7.domain.dto.AppEventDto;
 import com.transfer.app7.facade.AppEventFacade;
@@ -40,7 +42,10 @@ public class AppEventControllerTestSuite {
         //Given
         AppEventDto appEventDto = new AppEventDto(10L, LocalDateTime.now(), Event.CREATE, "Create");
 
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder()
+                .setPrettyPrinting()
+                .registerTypeAdapter(LocalDateTime.class, new LocalDateAdapter())
+                .create();
         String jsonContent = gson.toJson(appEventDto);
 
         //When & Then
