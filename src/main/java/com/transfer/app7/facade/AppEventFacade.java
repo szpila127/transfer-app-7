@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Component
@@ -30,11 +29,6 @@ public class AppEventFacade {
     public List<AppEventDto> getEvents() {
         LOGGER.info("Getting list of AppEvents");
         return appEventMapper.mapToAppEventDtoList(appEventService.getAllEvents());
-    }
-
-    public List<AppEventDto> getEventsByDate(LocalDate date) {
-        LOGGER.info("Getting list of AppEvents bu date:" + date);
-        return appEventMapper.mapToAppEventDtoList(appEventService.getByDate(date));
     }
 
     public Long countEvents() {

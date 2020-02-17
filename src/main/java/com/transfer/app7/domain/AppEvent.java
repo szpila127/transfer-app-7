@@ -6,8 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -20,8 +19,7 @@ public class AppEvent {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private LocalDate date;
-    private LocalTime time;
+    private LocalDateTime date;
 
     @Enumerated(EnumType.STRING)
     private Event event;

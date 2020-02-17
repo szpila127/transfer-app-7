@@ -13,8 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +38,7 @@ public class AppEventControllerTestSuite {
     @Test
     public void testCreateEvent() throws Exception {
         //Given
-        AppEventDto appEventDto = new AppEventDto(10L, LocalDate.now(), LocalTime.now(), Event.CREATE, "Create");
+        AppEventDto appEventDto = new AppEventDto(10L, LocalDateTime.now(), Event.CREATE, "Create");
 
         Gson gson = new Gson();
         String jsonContent = gson.toJson(appEventDto);
@@ -55,8 +54,8 @@ public class AppEventControllerTestSuite {
     @Test
     public void testGetEvents() throws Exception {
         //Given
-        AppEventDto appEventDto1 = new AppEventDto(10L, LocalDate.now(), LocalTime.now(), Event.CREATE, "Create");
-        AppEventDto appEventDto2 = new AppEventDto(10L, LocalDate.now(), LocalTime.now(), Event.DELETE, "Delete");
+        AppEventDto appEventDto1 = new AppEventDto(10L, LocalDateTime.now(), Event.CREATE, "Create");
+        AppEventDto appEventDto2 = new AppEventDto(10L, LocalDateTime.now(), Event.DELETE, "Delete");
         List<AppEventDto> listDto = new ArrayList<>();
         listDto.add(appEventDto1);
         listDto.add(appEventDto2);
@@ -65,26 +64,6 @@ public class AppEventControllerTestSuite {
 
         //When & Then
         mockMvc.perform(get("/v1/ta7/event")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[1].information", is("Delete")));
-    }
-
-    @Test
-    public void testGetEventsByDate() throws Exception {
-        //Given
-        AppEventDto appEventDto1 = new AppEventDto(10L, LocalDate.parse("2020-10-10"), LocalTime.now(), Event.CREATE, "Create");
-        AppEventDto appEventDto2 = new AppEventDto(10L, LocalDate.parse("2019-10-10"), LocalTime.now(), Event.DELETE, "Delete");
-        List<AppEventDto> listDto = new ArrayList<>();
-        listDto.add(appEventDto1);
-        listDto.add(appEventDto2);
-        LocalDate localDate = LocalDate.parse("2020-10-10");
-
-        when(appEventFacade.getEventsByDate(localDate)).thenReturn(listDto);
-
-        //When & Then
-        mockMvc.perform(get("/v1/ta7/event/date/2020-10-10")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
@@ -106,7 +85,7 @@ public class AppEventControllerTestSuite {
     @Test
     public void testGetEvent() throws Exception {
         //Given
-        AppEventDto appEventDto1 = new AppEventDto(10L, LocalDate.now(), LocalTime.now(), Event.CREATE, "Create");
+        AppEventDto appEventDto1 = new AppEventDto(10L, LocalDateTime.now(), Event.CREATE, "Create");
 
         when(appEventFacade.getEvent(10L)).thenReturn(appEventDto1);
 

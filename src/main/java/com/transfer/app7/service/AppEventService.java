@@ -5,7 +5,6 @@ import com.transfer.app7.repository.AppEventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,10 +16,6 @@ public class AppEventService {
 
     public List<AppEvent> getAllEvents() {
         return appEventRepository.findAll();
-    }
-
-    public List<AppEvent> getByDate(LocalDate date) {
-        return appEventRepository.findByDate(date);
     }
 
     public AppEvent save(AppEvent appEvent) {

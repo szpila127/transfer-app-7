@@ -6,7 +6,6 @@ import com.transfer.app7.facade.AppEventFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -25,11 +24,6 @@ public class AppEventController {
     @GetMapping
     public List<AppEventDto> getEvents() {
         return appEventFacade.getEvents();
-    }
-
-    @GetMapping(value = "/date/{date}")
-    public List<AppEventDto> getEventsByDate(@PathVariable String date) {
-        return appEventFacade.getEventsByDate(LocalDate.parse(date));
     }
 
     @GetMapping(value = "/count")

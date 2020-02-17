@@ -9,8 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +25,7 @@ public class AppEventMapperTestSuite {
     @Test
     public void testMapToAppEvent() {
         //Given
-        AppEventDto appEventDto = new AppEventDto(1L, LocalDate.now(), LocalTime.now(), Event.CREATE, "Test1");
+        AppEventDto appEventDto = new AppEventDto(1L, LocalDateTime.now(), Event.CREATE, "Test1");
         //When
         AppEvent appEvent = appEventMapper.mapToAppEvent(appEventDto);
         //Then
@@ -37,7 +36,7 @@ public class AppEventMapperTestSuite {
     @Test
     public void testMapToAppEventDto() {
         //Given
-        AppEvent appEvent = new AppEvent(1L, LocalDate.now(), LocalTime.now(), Event.DELETE, "Test2");
+        AppEvent appEvent = new AppEvent(1L, LocalDateTime.now(), Event.DELETE, "Test2");
         //When
         AppEventDto appEventDto = appEventMapper.mapToAppEventDto(appEvent);
         //Then
@@ -48,8 +47,8 @@ public class AppEventMapperTestSuite {
     @Test
     public void testMapToAppEventDtoList() {
         //Given
-        AppEvent appEvent1 = new AppEvent(1L, LocalDate.now(), LocalTime.now(), Event.DELETE, "Test31");
-        AppEvent appEvent2 = new AppEvent(2L, LocalDate.now(), LocalTime.now(), Event.CREATE, "Test32");
+        AppEvent appEvent1 = new AppEvent(1L, LocalDateTime.now(), Event.DELETE, "Test31");
+        AppEvent appEvent2 = new AppEvent(2L, LocalDateTime.now(), Event.CREATE, "Test32");
         List<AppEvent> list = new ArrayList<>();
         list.add(appEvent1);
         list.add(appEvent2);

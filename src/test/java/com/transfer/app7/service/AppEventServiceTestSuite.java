@@ -9,8 +9,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -31,8 +30,8 @@ public class AppEventServiceTestSuite {
     @Test
     public void testGetAllEvents() {
         //Given
-        AppEvent appEvent1 = new AppEvent(1L, LocalDate.now(), LocalTime.now(), Event.CREATE, "Create");
-        AppEvent appEvent2 = new AppEvent(2L, LocalDate.now(), LocalTime.now(), Event.DELETE, "Delete");
+        AppEvent appEvent1 = new AppEvent(1L, LocalDateTime.now(), Event.CREATE, "Create");
+        AppEvent appEvent2 = new AppEvent(2L, LocalDateTime.now(), Event.DELETE, "Delete");
         List<AppEvent> list = new ArrayList<>();
         list.add(appEvent1);
         list.add(appEvent2);
@@ -46,26 +45,9 @@ public class AppEventServiceTestSuite {
     }
 
     @Test
-    public void testGetByDate() {
-        //Given
-        AppEvent appEvent1 = new AppEvent(1L, LocalDate.now(), LocalTime.now(), Event.CREATE, "Create");
-        AppEvent appEvent2 = new AppEvent(2L, LocalDate.now(), LocalTime.now(), Event.DELETE, "Delete");
-        List<AppEvent> list = new ArrayList<>();
-        list.add(appEvent1);
-        list.add(appEvent2);
-
-        when(appEventRepository.findByDate(LocalDate.now())).thenReturn(list);
-        //When
-        List<AppEvent> listGet = appEventService.getByDate(LocalDate.now());
-        //Then
-        assertEquals(2, listGet.size());
-        assertEquals(Event.CREATE, listGet.get(0).getEvent());
-    }
-
-    @Test
     public void testSave() {
         //Given
-        AppEvent appEvent1 = new AppEvent(1L, LocalDate.now(), LocalTime.now(), Event.CREATE, "Create");
+        AppEvent appEvent1 = new AppEvent(1L, LocalDateTime.now(), Event.CREATE, "Create");
 
         when(appEventRepository.save(any(AppEvent.class))).thenReturn(appEvent1);
         //When
@@ -77,7 +59,7 @@ public class AppEventServiceTestSuite {
     @Test
     public void testGetEvent() {
         //Given
-        AppEvent appEvent1 = new AppEvent(11L, LocalDate.now(), LocalTime.now(), Event.CREATE, "Create");
+        AppEvent appEvent1 = new AppEvent(11L, LocalDateTime.now(), Event.CREATE, "Create");
 
         when(appEventRepository.findById(11L)).thenReturn(java.util.Optional.of(appEvent1));
 

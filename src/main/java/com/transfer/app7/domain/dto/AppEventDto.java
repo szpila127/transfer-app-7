@@ -8,8 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -18,8 +17,7 @@ import java.time.LocalTime;
 public class AppEventDto {
 
     private Long id;
-    private LocalDate date = LocalDate.now();
-    private LocalTime time = LocalTime.now();
+    private LocalDateTime date = LocalDateTime.now();
 
     @Enumerated(EnumType.STRING)
     private Event event;
