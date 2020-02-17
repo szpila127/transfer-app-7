@@ -29,9 +29,7 @@ public class CurrencyControllerTestSuite {
     @Test
     public void testGetFactor() throws Exception {
         //Given
-        double factor = 2.04;
-
-        when(nbpApiClient.getCurrencyFactor("CURRENCY")).thenReturn(factor);
+        when(nbpApiClient.getCurrencyFactor("CURRENCY")).thenReturn(2.04);
 
         //When & Then
         mockMvc.perform(get("/v1/ta7/currency/CURRENCY")

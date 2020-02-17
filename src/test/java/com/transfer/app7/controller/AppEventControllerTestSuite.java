@@ -39,7 +39,7 @@ public class AppEventControllerTestSuite {
     @Test
     public void testCreateEvent() throws Exception {
         //Given
-        AppEventDto appEventDto = new AppEventDto(10L, LocalDate.now(), LocalTime.now(), Event.CREATE, "Create");
+        AppEventDto appEventDto = new AppEventDto(10L, LocalDate.parse("2019-10-10"), LocalTime.parse("12:12:12"), Event.CREATE, "Create");
 
         Gson gson = new Gson();
         String jsonContent = gson.toJson(appEventDto);
@@ -74,8 +74,8 @@ public class AppEventControllerTestSuite {
     @Test
     public void testGetEventsByDate() throws Exception {
         //Given
-        AppEventDto appEventDto1 = new AppEventDto(10L, LocalDate.now(), LocalTime.now(), Event.CREATE, "Create");
-        AppEventDto appEventDto2 = new AppEventDto(10L, LocalDate.now(), LocalTime.now(), Event.DELETE, "Delete");
+        AppEventDto appEventDto1 = new AppEventDto(10L, LocalDate.parse("2020-10-10"), LocalTime.now(), Event.CREATE, "Create");
+        AppEventDto appEventDto2 = new AppEventDto(10L, LocalDate.parse("2019-10-10"), LocalTime.now(), Event.DELETE, "Delete");
         List<AppEventDto> listDto = new ArrayList<>();
         listDto.add(appEventDto1);
         listDto.add(appEventDto2);
@@ -94,9 +94,7 @@ public class AppEventControllerTestSuite {
     @Test
     public void testCountEvents() throws Exception {
         //Given
-        Long amount = 5L;
-
-        when(appEventFacade.countEvents()).thenReturn(amount);
+        when(appEventFacade.countEvents()).thenReturn(5L);
 
         //When & Then
         mockMvc.perform(get("/v1/ta7/event/count")

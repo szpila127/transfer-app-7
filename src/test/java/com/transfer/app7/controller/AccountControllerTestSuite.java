@@ -89,9 +89,7 @@ public class AccountControllerTestSuite {
     @Test
     public void testCountAccounts() throws Exception {
         //Given
-        Long amount = 10L;
-
-        when(accountFacade.countAccounts()).thenReturn(amount);
+        when(accountFacade.countAccounts()).thenReturn(10L);
 
         //When & Then
         mockMvc.perform(get("/v1/ta7/account/count")

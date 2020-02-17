@@ -85,9 +85,7 @@ public class UserControllerTestSuite {
     @Test
     public void testCountUsers() throws Exception {
         //Given
-        Long amount = 10L;
-
-        when(userFacade.countUsers()).thenReturn(amount);
+        when(userFacade.countUsers()).thenReturn(10L);
 
         //When & Then
         mockMvc.perform(get("/v1/ta7/user/count")
@@ -113,8 +111,6 @@ public class UserControllerTestSuite {
     @Test
     public void testDeleteUser() throws Exception {
         //Given
-        UserDto userDto1 = new UserDto(1L, "sebek", "sebek", "929292929", new ArrayList<>());
-
         when(userFacade.deleteUser(1L)).thenReturn("Deleted");
 
         //When & Then
@@ -122,7 +118,7 @@ public class UserControllerTestSuite {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is("Deleted")));
-        verify(userFacade, times(1)).deleteUser(userDto1.getId());
+        verify(userFacade, times(1)).deleteUser(1L);
     }
 
     @Test
