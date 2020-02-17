@@ -5,6 +5,7 @@ import com.transfer.app7.domain.dto.UserDto;
 import com.transfer.app7.facade.UserFacade;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentMatchers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -17,9 +18,8 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -94,5 +94,54 @@ public class UserControllerTestSuite {
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(10)));
+    }
+
+    @Test
+    public void testGetUser() throws Exception {
+        //Given
+        UserDto userDto1 = new UserDto(1L, "sebek", "sebek", "929292929", new ArrayList<>());
+
+        when(userFacade.getUser(1L)).thenReturn(userDto1);
+
+        //When & Then
+        mockMvc.perform(get("/v1/ta7/user/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.email", is("sebek")));
+    }
+
+    @Test
+    public void testDeleteUser() throws Exception {
+        //Given
+        UserDto userDto1 = new UserDto(1L, "sebek", "sebek", "929292929", new ArrayList<>());
+
+        when(userFacade.deleteUser(1L)).thenReturn("Deleted");
+
+        //When & Then
+        mockMvc.perform(delete("/v1/ta7/user/1")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", is("Deleted")));
+        verify(userFacade, times(1)).deleteUser(userDto1.getId());
+    }
+
+    @Test
+    public void testUpdateUser() throws Exception {
+        //Given
+        UserDto userDto1 = new UserDto(1L, "sebek", "sebek", "929292929", new ArrayList<>());
+
+        when(userFacade.updateUser(ArgumentMatchers.any(UserDto.class))).thenReturn(userDto1);
+
+        Gson gson = new Gson();
+        String jsonContent = gson.toJson(userDto1);
+
+        //When & Then
+        mockMvc.perform(put("/v1/ta7/user")
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8")
+                .content(jsonContent))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id", is(1)));
+        verify(userFacade, times(1)).updateUser(ArgumentMatchers.any(UserDto.class));
     }
 }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 public class CurrencyController {
 
     @Autowired
-    NbpApiClient nbpApiClient;
+    private NbpApiClient nbpApiClient;
 
     @GetMapping(value = "/{code}")
     public double getFactor(@PathVariable String code) {
