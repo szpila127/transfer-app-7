@@ -1,5 +1,6 @@
 package com.transfer.app7.service;
 
+import com.transfer.app7.config.EmailConfig;
 import com.transfer.app7.domain.User;
 import com.transfer.app7.repository.UserRepository;
 import org.junit.Test;
@@ -25,6 +26,12 @@ public class UserServiceTestSuite {
     @Mock
     private UserRepository userRepository;
 
+    @Mock
+    private EmailService emailService;
+
+    @Mock
+    private EmailConfig emailConfig;
+
     @Test
     public  void testGetAllUsers() {
         //Given
@@ -46,12 +53,13 @@ public class UserServiceTestSuite {
         //Given
         User user1 = new User(1L, "sebek", "sebek", "919191919", new ArrayList<>());
 
-        when(userRepository.save(any())).thenReturn(user1);
+        when(emailConfig.getAdminMail()).thenReturn("sebek");
+        doNothing().when(emailService).send(any());
+        when(userRepository.save(any(User.class))).thenReturn(user1);
         //When
         User userSave = userService.save(user1);
         //Then
         assertEquals("sebek", userSave.getEmail());
-
     }
 
     @Test
