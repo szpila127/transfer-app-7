@@ -39,7 +39,7 @@ public class AppEventControllerTestSuite {
     @Test
     public void testCreateEvent() throws Exception {
         //Given
-        AppEventDto appEventDto = new AppEventDto(10L, LocalDate.parse("2019-10-10"), LocalTime.parse("12:12:12"), Event.CREATE, "Create");
+        AppEventDto appEventDto = new AppEventDto(10L, LocalDate.now(), LocalTime.now(), Event.CREATE, "Create");
 
         Gson gson = new Gson();
         String jsonContent = gson.toJson(appEventDto);

@@ -13,8 +13,10 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -62,6 +64,37 @@ public class AppEventServiceTestSuite {
 
     @Test
     public void testSave() {
+        //Given
+        AppEvent appEvent1 = new AppEvent(1L, LocalDate.now(), LocalTime.now(), Event.CREATE, "Create");
 
+        when(appEventRepository.save(any(AppEvent.class))).thenReturn(appEvent1);
+        //When
+        AppEvent appEventSave = appEventService.save(appEvent1);
+        //Then
+        assertEquals(Event.CREATE, appEventSave.getEvent());
+    }
+
+    @Test
+    public void testGetEvent() {
+        //Given
+        AppEvent appEvent1 = new AppEvent(11L, LocalDate.now(), LocalTime.now(), Event.CREATE, "Create");
+
+        when(appEventRepository.findById(11L)).thenReturn(java.util.Optional.of(appEvent1));
+
+        //When
+        Optional<AppEvent> appEventGet = appEventService.getEvent(11L);
+        //Then
+        assertEquals("Create", appEventGet.get().getInformation());
+    }
+
+    @Test
+    public void testCountEvent() {
+        //Given
+        when(appEventRepository.count()).thenReturn(15L);
+
+        //When
+        long amount = appEventService.countEvents();
+        //Then
+        assertEquals(15L, amount);
     }
 }
