@@ -10,12 +10,12 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -30,10 +30,10 @@ public class UserFacadeTestSuite {
     @Mock
     private AppEventFacade appEventFacade;
 
-    @Autowired
+    @Mock
     private UserService userService;
 
-    @Autowired
+    @Mock
     private UserMapper userMapper;
 
     @Test
@@ -46,7 +46,7 @@ public class UserFacadeTestSuite {
         List<UserDto> listDto = new ArrayList<>();
         listDto.add(userDto);
 
-        when(userMapper.mapToUserDtoList(list)).thenReturn(listDto);
+        when(userMapper.mapToUserDtoList(any())).thenReturn(listDto);
         when(userService.getAllUsers()).thenReturn(list);
         //When
         List<UserDto> listGet = userFacade.getUsers();
