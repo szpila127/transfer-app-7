@@ -53,4 +53,28 @@ public class UserFacadeTestSuite {
         //Then
         assertEquals(1, listGet.size());
     }
+
+    @Test
+    public void testCountUsers() {
+        //Given
+        when(userService.countUsers()).thenReturn(15L);
+        //When
+        long amount = userFacade.countUsers();
+        //Then
+        assertEquals(15L, amount);
+    }
+
+    @Test
+    public void testGetUser() {
+        //Given
+        User user = new User(1L, "sebek", "sebek", "919191919", new ArrayList<>());
+        UserDto userDto = new UserDto(1L, "sebek", "sebek", "919191919", new ArrayList<>());
+
+        when(userService.getUser(1L)).thenReturn(java.util.Optional.of(user));
+        when(userMapper.mapToUserDto(any())).thenReturn(userDto);
+        //When
+        UserDto userDtoGet = userFacade.getUser(1L);
+        //Then
+        assertEquals("sebek", userDtoGet.getEmail());
+    }
 }
