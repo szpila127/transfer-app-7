@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class AppEventDto {
 
-    private Long id;
+    private long id;
     private LocalDateTime date = LocalDateTime.now();
 
     @Enumerated(EnumType.STRING)

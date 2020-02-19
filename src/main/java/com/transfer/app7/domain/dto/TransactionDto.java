@@ -15,10 +15,10 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class TransactionDto {
 
-    private Long id;
+    private long id;
     private LocalDateTime date = LocalDateTime.now();
     private BigDecimal amount;
     private Currency currency;
-    private Long accountOutId;
-    private Long accountInId;
+    private long accountOutId;
+    private long accountInId;
 }

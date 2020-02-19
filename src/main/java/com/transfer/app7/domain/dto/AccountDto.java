@@ -14,12 +14,12 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class AccountDto {
 
-    private Long id;
+    private long id;
     private BigDecimal balance;
 
     @Enumerated(EnumType.STRING)
     private Currency currency;
 
-    private Long userId;
+    private long userId;
 
 }
