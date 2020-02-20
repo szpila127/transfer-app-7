@@ -58,10 +58,10 @@ public class AccountFacade {
     public void deleteAccount(Long accountId) {
         AppEventDto appEventDto = new AppEventDto(
                 Event.DELETE,
-                "Account id: " + accountId + ", User email: " + userFacade.getUser(accountService.getAccount(accountId).orElseThrow(NotFoundException::new).getUser().getId()).getEmail());
+                "Account id: " + accountId);
         appEventFacade.createEvent(appEventDto);
-        accountService.deleteAccount(accountId);
         LOGGER.info("Account: " + accountId + " deleted");
+        accountService.deleteAccount(accountId);
     }
 
     public AccountDto updateAccount(AccountDto accountDto) {
