@@ -33,10 +33,10 @@ public class UserFacade {
 
     public String createUser(UserDto userDto) {
         LOGGER.info("Creating an user...");
-        boolean isValid = emailValidatorApiClient.validateEmail(userDto.getEmail()).isValid();
+        boolean isValidEmail = emailValidatorApiClient.validateEmail(userDto.getEmail()).isValid();
         boolean exists = containsEmail(userService.getAllUsers(), userDto.getEmail());
         if (!exists) {
-            if (isValid) {
+            if (isValidEmail) {
                 userService.save(userMapper.mapToUser(userDto));
                 AppEventDto appEventDto = new AppEventDto(
                         Event.CREATE,
