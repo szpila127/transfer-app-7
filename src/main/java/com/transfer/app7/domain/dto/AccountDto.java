@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 public class AccountDto {
 
-    private long id;
+    private Long id;
     private BigDecimal balance;
 
     @Enumerated(EnumType.STRING)

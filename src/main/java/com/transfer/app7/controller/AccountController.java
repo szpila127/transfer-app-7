@@ -36,8 +36,8 @@ public class AccountController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public String deleteAccount(@PathVariable("id") Long accountId) {
-        return accountFacade.deleteAccount(accountId);
+    public void deleteAccount(@PathVariable("id") Long accountId) {
+        accountFacade.deleteAccount(accountId);
     }
 
     @PutMapping(consumes = "application/json")

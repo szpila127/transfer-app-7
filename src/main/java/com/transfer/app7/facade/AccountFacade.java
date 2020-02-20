@@ -55,14 +55,13 @@ public class AccountFacade {
         return accountMapper.mapToAccountDto(accountService.getAccount(accountId).orElseThrow(NotFoundException::new));
     }
 
-    public String deleteAccount(Long accountId) {
+    public void deleteAccount(Long accountId) {
         AppEventDto appEventDto = new AppEventDto(
                 Event.DELETE,
                 "Account id: " + accountId + ", User email: " + userFacade.getUser(accountService.getAccount(accountId).orElseThrow(NotFoundException::new).getUser().getId()).getEmail());
         appEventFacade.createEvent(appEventDto);
         accountService.deleteAccount(accountId);
         LOGGER.info("Account: " + accountId + " deleted");
-        return "Account deleted.";
     }
 
     public AccountDto updateAccount(AccountDto accountDto) {

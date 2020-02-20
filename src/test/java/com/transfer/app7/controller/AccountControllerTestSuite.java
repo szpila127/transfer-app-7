@@ -117,13 +117,12 @@ public class AccountControllerTestSuite {
         //Given
         AccountDto accountDto1 = new AccountDto(1L, new BigDecimal(1000), Currency.EUR, 11L);
 
-        when(accountFacade.deleteAccount(1L)).thenReturn("Deleted");
+        doNothing().when(accountFacade).deleteAccount(1L);
 
         //When & Then
         mockMvc.perform(delete("/v1/ta7/account/1")
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", is("Deleted")));
+                .andExpect(status().isOk());
         verify(accountFacade, times(1)).deleteAccount(accountDto1.getId());
     }
 

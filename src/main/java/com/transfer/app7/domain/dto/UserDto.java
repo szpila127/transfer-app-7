@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 public class UserDto {
 
-    private long id;
+    private Long id;
     private String email;
     private String password;
     private String pesel;

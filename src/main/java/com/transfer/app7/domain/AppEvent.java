@@ -17,7 +17,7 @@ public class AppEvent {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
+    private Long id;
 
     private LocalDateTime date;
 

@@ -120,9 +120,9 @@ public class AccountFacadeTestSuite {
         doNothing().when(appEventFacade).createEvent(any());
         doNothing().when(accountService).deleteAccount(any());
         //When
-        String string = accountFacade.deleteAccount(1L);
+        accountFacade.deleteAccount(1L);
         //Then
-        assertEquals("Account deleted.", string);
+        verify(accountService, times(1)).deleteAccount(1L);
     }
 
     @Test
