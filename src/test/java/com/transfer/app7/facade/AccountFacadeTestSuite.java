@@ -115,8 +115,6 @@ public class AccountFacadeTestSuite {
         Account account = new Account(1L, new BigDecimal(1000), Currency.EUR, user);
         UserDto userDto = new UserDto(1L, "sebek", "seb", "919191919", new ArrayList<>());
 
-        when(accountService.getAccount(any())).thenReturn(java.util.Optional.of(account));
-        when(userFacade.getUser(any())).thenReturn(userDto);
         doNothing().when(appEventFacade).createEvent(any());
         doNothing().when(accountService).deleteAccount(any());
         //When

@@ -16,6 +16,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @EnableAspectJAutoProxy
@@ -81,6 +82,7 @@ public class TransactionFacade {
         Long newAccountInId = transactionDtoGet.getAccountOutId();
         transactionDtoGet.setAccountInId(newAccountInId);
         transactionDtoGet.setAccountOutId(newAccountOutId);
+        transactionDtoGet.setDate(LocalDateTime.now());
         transactionDtoGet.setId(null);
         return createTransaction(transactionDtoGet);
     }
