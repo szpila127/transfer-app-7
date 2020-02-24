@@ -14,4 +14,3 @@ Główne funkcjonalności:
  - startuje lokalnie na porcie **8080** z adresem **API [/v1/ta7](/v1/ta7)**
  - scheduler wysyła maile codziennie o godz. 20:00 z informacją o ilości używkowników i ilości kont
  - podczas korzystania z aplikacji są tworzone zdarzenia i zapisywane do bazy danych, w celach informacyjnych
-
