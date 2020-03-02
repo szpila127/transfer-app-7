@@ -38,7 +38,6 @@ public class EmailServiceTestSuite {
         mailMessage.setText(mail.getMessage());
 
         doNothing().when(appEventFacade).createEvent(ArgumentMatchers.any(AppEventDto.class));
-
         //When
         emailService.send(mail);
 

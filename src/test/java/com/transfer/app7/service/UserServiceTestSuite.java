@@ -33,7 +33,7 @@ public class UserServiceTestSuite {
     private EmailConfig emailConfig;
 
     @Test
-    public  void testGetAllUsers() {
+    public void testGetAllUsers() {
         //Given
         User user1 = new User(1L, "sebek", "sebek", "919191919", new ArrayList<>());
         User user2 = new User(2L, "krzys", "krzys", "919191919", new ArrayList<>());

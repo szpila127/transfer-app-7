@@ -46,7 +46,6 @@ public class AccountServiceTestSuite {
         list.add(account2);
 
         when(accountRepository.findAll()).thenReturn(list);
-
         //When
         List<Account> listGet = accountService.getAllAccounts();
         //Then

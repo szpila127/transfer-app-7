@@ -42,7 +42,6 @@ public class TransactionMapperTestSuite {
 
         when(accountRepository.findById(transactionDto.getAccountInId())).thenReturn(java.util.Optional.of(account11));
         when(accountRepository.findById(transactionDto.getAccountOutId())).thenReturn(java.util.Optional.of(account10));
-
         //When
         Transaction transaction = transactionMapper.mapToTransaction(transactionDto);
         //Then
@@ -67,7 +66,7 @@ public class TransactionMapperTestSuite {
     }
 
     @Test
-    public void testMapToTransactionDtoList () {
+    public void testMapToTransactionDtoList() {
         //Given
         User user1 = new User(1L, "sebek", "sebek", "919191919", new ArrayList<>());
         Account account10 = new Account(10L, new BigDecimal(10000), Currency.EUR, user1);

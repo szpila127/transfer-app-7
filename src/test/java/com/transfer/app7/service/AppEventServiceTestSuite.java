@@ -62,7 +62,6 @@ public class AppEventServiceTestSuite {
         AppEvent appEvent1 = new AppEvent(11L, LocalDateTime.now(), Event.CREATE, "Create");
 
         when(appEventRepository.findById(11L)).thenReturn(java.util.Optional.of(appEvent1));
-
         //When
         Optional<AppEvent> appEventGet = appEventService.getEvent(11L);
         //Then
@@ -73,7 +72,6 @@ public class AppEventServiceTestSuite {
     public void testCountEvent() {
         //Given
         when(appEventRepository.count()).thenReturn(15L);
-
         //When
         long amount = appEventService.countEvents();
         //Then
