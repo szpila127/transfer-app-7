@@ -23,6 +23,7 @@ public class EmailValidatorApiClient {
     private RestTemplate restTemplate;
 
     public EmailValidatorDto validateEmail(String email) {
+        email = email.toLowerCase();
         URI url = UriComponentsBuilder.fromHttpUrl(emailValidatorApiConfig.getEmailValidatorApiEndpoint() + email)
                 .build()
                 .encode()

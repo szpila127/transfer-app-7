@@ -12,6 +12,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class EmailValidatorDto {
 
-    @JsonProperty(value = "isValid")
+    @JsonProperty
     private boolean valid;
 }
