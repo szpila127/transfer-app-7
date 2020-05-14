@@ -26,12 +26,14 @@ public class AccountService {
         return accountRepository.findAll();
     }
 
-    public Account save(Account account) {
-        emailService.send(new Mail(
-                emailConfig.getAdminMail(),
-                "New account :)",
-                "New account for: " + account.getUser() + " has bee created on your application."
-        ));
+    public Account save(Account account, boolean newAccount) {
+        if (newAccount) {
+            emailService.send(new Mail(
+                    emailConfig.getAdminMail(),
+                    "New account :)",
+                    "New account for: " + account.getUser() + " has bee created on your application."
+            ));
+        }
         return accountRepository.save(account);
     }
 

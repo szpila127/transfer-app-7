@@ -31,7 +31,7 @@ public class AccountFacade {
 
     public String createAccount(AccountDto accountDto) {
         LOGGER.info("Creating an account");
-        accountService.save(accountMapper.mapToAccount(accountDto));
+        accountService.save(accountMapper.mapToAccount(accountDto), true);
         AppEventDto appEventDto = new AppEventDto(
                 Event.CREATE,
                 "Account " + accountDto.getCurrency() + " for " + userFacade.getUser(accountDto.getUserId()).getEmail() +
@@ -73,6 +73,6 @@ public class AccountFacade {
                         ", userId: " + accountService.getAccount(accountDto.getId()).orElseThrow(NotFoundException::new).getUser().getId() + " -> " + accountDto.getUserId());
         appEventFacade.createEvent(appEventDto);
         LOGGER.info("Updating account id: " + accountDto.getId());
-        return accountMapper.mapToAccountDto(accountService.save(accountMapper.mapToAccount(accountDto)));
+        return accountMapper.mapToAccountDto(accountService.save(accountMapper.mapToAccount(accountDto), true));
     }
 }

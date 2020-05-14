@@ -63,9 +63,9 @@ public class TransactionFacade {
     private void handleTransaction(TransactionDto transactionDto, Account accountOut, Account accountIn, double currencyChangerOut, double currencyChangerIn) {
         LOGGER.info("Transaction in progress...");
         accountOut.setBalance(accountOut.getBalance().subtract(transactionDto.getAmount().multiply(new BigDecimal(currencyChangerOut))));
-        accountService.save(accountOut);
+        accountService.save(accountOut, false);
         accountIn.setBalance(accountIn.getBalance().add(transactionDto.getAmount().multiply(new BigDecimal(currencyChangerIn))));
-        accountService.save(accountIn);
+        accountService.save(accountIn, false);
         transactionService.save(transactionMapper.mapToTransaction(transactionDto));
         AppEventDto appEventDto = new AppEventDto(
                 Event.CREATE,
