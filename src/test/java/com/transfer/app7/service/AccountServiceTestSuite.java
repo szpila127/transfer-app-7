@@ -63,7 +63,7 @@ public class AccountServiceTestSuite {
         when(emailConfig.getAdminMail()).thenReturn("sebek");
         doNothing().when(emailService).send(any());
         //When
-        Account accountSave = accountService.save(account1);
+        Account accountSave = accountService.save(account1, true);
         //Then
         assertEquals(Currency.EUR, accountSave.getCurrency());
     }

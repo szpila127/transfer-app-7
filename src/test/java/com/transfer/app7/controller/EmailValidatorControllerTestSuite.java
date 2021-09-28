@@ -1,6 +1,7 @@
 package com.transfer.app7.controller;
 
 import com.transfer.app7.client.EmailValidatorApiClient;
+import com.transfer.app7.domain.dto.emailValidator.EmailValidatorDto;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

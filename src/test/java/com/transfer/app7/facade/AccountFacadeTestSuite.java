@@ -48,7 +48,7 @@ public class AccountFacadeTestSuite {
         AccountDto accountDto = new AccountDto(1L, new BigDecimal(1000), Currency.EUR, 1L);
 
         when(accountMapper.mapToAccount(accountDto)).thenReturn(account);
-        when(accountService.save(account)).thenReturn(account);
+        when(accountService.save(account, true)).thenReturn(account);
         doNothing().when(appEventFacade).createEvent(any());
         when(userFacade.getUser(any())).thenReturn(userDto);
         //When
@@ -136,7 +136,7 @@ public class AccountFacadeTestSuite {
         doNothing().when(appEventFacade).createEvent(any());
         when(accountMapper.mapToAccountDto(any())).thenReturn(account1Dto);
         when(accountMapper.mapToAccount(any())).thenReturn(account);
-        when(accountService.save(account)).thenReturn(account);
+        when(accountService.save(account, true)).thenReturn(account);
         //When
         AccountDto accountGet = accountFacade.updateAccount(account1Dto);
         //Then
