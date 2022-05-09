@@ -6,7 +6,7 @@ Link do frontu: [[https://github.com/szpila127/transfer-app-7front](https://gith
 Aplikacja jest prostym symulatorem banku.
 Główne funkcjonalności:
  - podczas rejestracji użytkownika sprawdza poprawność maila, aby nie tworzyć kont "duchów" - Email Validator API
- - stale monitoruje aktualne kursy walut [EUR, USD, GBP] - NBP Web API
+ - stale monitoruje aktualne kursy walut [EUR, USD, GBP, CHF] - NBP Web API
  - przy przelewach bankowych sprawdza dostępne środki na koncie, z którego ma być wykonany przelew (przelicza wg aktualnego kursu waluty), jeśli środków jest wystarczająco, trafiają one na wskazane konto i są przeliczane na przypisaną do konta walutę.
  - dostępna jest możliwość natychmiastowego zwrotu przelewu
  - po utworzeniu użytkownika lub konta aplikacja wysyła informację na maila administratora - done przypisane w *application.properties*
