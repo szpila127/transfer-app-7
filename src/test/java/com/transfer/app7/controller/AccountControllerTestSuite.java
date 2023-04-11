@@ -46,9 +46,9 @@ public class AccountControllerTestSuite {
 
         //When & Then
         mockMvc.perform(post("/v1/ta7/account")
-                .contentType(MediaType.APPLICATION_JSON)
-                .characterEncoding("UTF-8")
-                .content(jsonContent))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .characterEncoding("UTF-8")
+                        .content(jsonContent))
                 .andExpect(status().isOk());
     }
 
@@ -61,7 +61,7 @@ public class AccountControllerTestSuite {
 
         //When & Then
         mockMvc.perform(get("/v1/ta7/account")
-                .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(200))
                 .andExpect(jsonPath("$", hasSize(0)));
     }
@@ -79,7 +79,7 @@ public class AccountControllerTestSuite {
 
         //When & Then
         mockMvc.perform(get("/v1/ta7/account")
-                .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(200))
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].id", is(1)))
@@ -93,7 +93,7 @@ public class AccountControllerTestSuite {
 
         //When & Then
         mockMvc.perform(get("/v1/ta7/account/count")
-                .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(10)));
     }
@@ -107,7 +107,7 @@ public class AccountControllerTestSuite {
 
         //When & Then
         mockMvc.perform(get("/v1/ta7/account/1")
-                .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.currency", is("EUR")));
     }
@@ -121,7 +121,7 @@ public class AccountControllerTestSuite {
 
         //When & Then
         mockMvc.perform(delete("/v1/ta7/account/1")
-                .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
         verify(accountFacade, times(1)).deleteAccount(accountDto1.getId());
     }
@@ -138,9 +138,9 @@ public class AccountControllerTestSuite {
 
         //When & then
         mockMvc.perform(put("/v1/ta7/account")
-                .contentType(MediaType.APPLICATION_JSON)
-                .characterEncoding("UTF-8")
-                .content(jsonContent))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .characterEncoding("UTF-8")
+                        .content(jsonContent))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(1)));
         verify(accountFacade, times(1)).updateAccount(ArgumentMatchers.any(AccountDto.class));

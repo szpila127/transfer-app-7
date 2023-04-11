@@ -43,9 +43,9 @@ public class UserControllerTestSuite {
 
         //When & Then
         mockMvc.perform(post("/v1/ta7/user")
-                .contentType(MediaType.APPLICATION_JSON)
-                .characterEncoding("UTF-8")
-                .content(jsonContent))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .characterEncoding("UTF-8")
+                        .content(jsonContent))
                 .andExpect(status().isOk());
     }
 
@@ -58,7 +58,7 @@ public class UserControllerTestSuite {
 
         //When & Then
         mockMvc.perform(get("/v1/ta7/user")
-                .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(0)));
     }
@@ -76,7 +76,7 @@ public class UserControllerTestSuite {
 
         //When & Then
         mockMvc.perform(get("/v1/ta7/user")
-                .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$[0].email", is("sebek")));
@@ -89,7 +89,7 @@ public class UserControllerTestSuite {
 
         //When & Then
         mockMvc.perform(get("/v1/ta7/user/count")
-                .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is(10)));
     }
@@ -103,7 +103,7 @@ public class UserControllerTestSuite {
 
         //When & Then
         mockMvc.perform(get("/v1/ta7/user/1")
-                .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.email", is("sebek")));
     }
@@ -115,7 +115,7 @@ public class UserControllerTestSuite {
 
         //When & Then
         mockMvc.perform(delete("/v1/ta7/user/1")
-                .contentType(MediaType.APPLICATION_JSON))
+                        .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", is("Deleted")));
         verify(userFacade, times(1)).deleteUser(1L);
@@ -133,9 +133,9 @@ public class UserControllerTestSuite {
 
         //When & Then
         mockMvc.perform(put("/v1/ta7/user")
-                .contentType(MediaType.APPLICATION_JSON)
-                .characterEncoding("UTF-8")
-                .content(jsonContent))
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .characterEncoding("UTF-8")
+                        .content(jsonContent))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id", is(1)));
         verify(userFacade, times(1)).updateUser(ArgumentMatchers.any(UserDto.class));
